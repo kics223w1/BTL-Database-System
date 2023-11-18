@@ -7,7 +7,7 @@ html {
 }
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 h1,
@@ -17,7 +17,7 @@ h4,
 h5,
 h6,
 a {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 @layer components {
@@ -56,5 +56,5 @@ a {
 }
 
 .logo {
-  font-family: 'Kaushan Script', cursive;
+  font-family: "Kaushan Script", cursive;
 }
