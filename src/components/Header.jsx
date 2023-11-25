@@ -1,12 +1,8 @@
 import Logo from "./Logo";
 import {
   Bars3Icon,
-  BuildingOfficeIcon,
-  ChevronDownIcon,
   HomeIcon,
   MagnifyingGlassIcon,
-  MapPinIcon,
-  PhoneIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -106,24 +102,6 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    to="/about"
-                    className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-                  >
-                    <BuildingOfficeIcon className="w-4 h-4 text-gray-700" />{" "}
-                    <p>About</p>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contact"
-                    className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-                  >
-                    <PhoneIcon className="w-4 h-4 text-gray-700" />{" "}
-                    <p>Contact</p>
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     to="/cart"
                     className="p-2 relative md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
                   >
@@ -173,24 +151,6 @@ const Header = () => {
                     className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
                   >
                     <HomeIcon className="w-4 h-4 text-gray-700" /> <p>Home</p>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/about"
-                    className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-                  >
-                    <BuildingOfficeIcon className="w-4 h-4 text-gray-700" />{" "}
-                    <p>About</p>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contact"
-                    className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-                  >
-                    <PhoneIcon className="w-4 h-4 text-gray-700" />{" "}
-                    <p>Contact</p>
                   </Link>
                 </li>
                 <li>
