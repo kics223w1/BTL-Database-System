@@ -1,13 +1,28 @@
+// @ts-ignore
+import banner1 from "../../assets/banners/banner1.png";
+// @ts-ignore
+import banner2 from "../../assets/banners/banner2.png";
+// @ts-ignore
+import banner3 from "../../assets/banners/banner3.png";
+// @ts-ignore
+import banner4 from "../../assets/banners/banner4.png";
+// @ts-ignore
+import banner5 from "../../assets/banners/banner5.png";
+// @ts-ignore
+import banner6 from "../../assets/banners/banner6.png";
+
 import Banner from "./Banner";
-import ShimmerBanner from "./shimmers/ShimmerBanner";
 import { useKeenSlider } from "keen-slider/react";
 import {
   ArrowLongLeftIcon,
   ArrowLongRightIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import React from "react";
 
-const BannerList = ({ isLoading, banners }) => {
+const srcImages = [banner1, banner2, banner3, banner4, banner5, banner6];
+
+const BannerList = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [sliderRef, instanceRef] = useKeenSlider({
     mode: "free",
@@ -26,10 +41,6 @@ const BannerList = ({ isLoading, banners }) => {
       },
     },
   });
-
-  if (!banners) {
-    return null;
-  }
 
   return (
     <div className="container-max ">
@@ -61,19 +72,11 @@ const BannerList = ({ isLoading, banners }) => {
         )}
       </div>
 
-      {isLoading ? (
-        <div className="flex gap-4 md:gap-8 mb-8">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <ShimmerBanner key={i} />
-          ))}
-        </div>
-      ) : (
-        <div ref={sliderRef} className="keen-slider">
-          {/* {banners.card.card.gridElements.infoWithStyle.info.map((banner) => (
-            <Banner banner={banner} key={banner.id} />
-          ))} */}
-        </div>
-      )}
+      <div ref={sliderRef} className="keen-slider">
+        {srcImages.map((src, index) => {
+          return <Banner srcImage={src} key={index} />;
+        })}
+      </div>
     </div>
   );
 };

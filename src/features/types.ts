@@ -8,3 +8,5 @@ export type Restaurant = {
   ward: string;
   number: string;
 };
+
+export type Banner = {};
