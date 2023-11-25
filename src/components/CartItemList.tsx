@@ -38,6 +38,7 @@ const CartItemList: FC<CartItemListProps> = () => {
       {cartItems.map((cardItem: any, index) => {
         const dish = cardItem.item;
         const quantity = cardItem.quantity;
+
         return (
           <li
             key={`CardItem_${index}`}
@@ -63,7 +64,7 @@ const CartItemList: FC<CartItemListProps> = () => {
               <div className="flex justify-between items-center mt-2">
                 <div className="flex items-center">
                   <button
-                    onClick={() => decreaseQuantity(dish.id)}
+                    onClick={() => decreaseQuantity(dish.dish_id)}
                     disabled={quantity === 1}
                     className={
                       "bg-orange-500 disabled:bg-orange-500/50 disabled:cursor-not-allowed text-white font-bold w-8 h-8 rounded-md"
@@ -75,7 +76,7 @@ const CartItemList: FC<CartItemListProps> = () => {
                     {quantity}
                   </p>
                   <button
-                    onClick={() => increaseQuantity(dish.id)}
+                    onClick={() => increaseQuantity(dish.dish_id)}
                     className="bg-orange-500 text-white font-bold w-8 h-8 rounded-md"
                   >
                     +
@@ -83,7 +84,7 @@ const CartItemList: FC<CartItemListProps> = () => {
                 </div>
 
                 <button
-                  onClick={() => removeItem(dish.id)}
+                  onClick={() => removeItem(dish.dish_id)}
                   className="border border-orange-500 text-xs font-semibold text-orange-500 p-2 px-4 rounded-md"
                 >
                   Remove

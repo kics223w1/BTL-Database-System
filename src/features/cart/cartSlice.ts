@@ -10,17 +10,30 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      state.items.push({
-        item: action.payload,
-        quantity: 1,
+      let founded = false;
+      state.items = state.items.flatMap((item) => {
+        if (action.payload.dish_id === item.item.dish_id) {
+          founded = true;
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return [item];
       });
+      if (!founded) {
+        state.items.push({
+          item: action.payload,
+          quantity: 1,
+        });
+      }
 
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
 
     removeFromCart: (state, action) => {
       state.items = state.items.filter(
-        (cartItem) => cartItem?.item?.card?.info?.id !== action.payload.id
+        (cartItem) => cartItem.item.dish_id !== action.payload.id
       );
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
@@ -29,8 +42,10 @@ const cartSlice = createSlice({
       const { id } = action.payload;
 
       const itemToIncrease = state.items.find(
-        (cartItem) => cartItem?.item?.card?.info?.id === id
+        (cartItem) => cartItem.item.dish_id === id
       );
+
+      console.log("huy: ", itemToIncrease);
 
       if (itemToIncrease) {
         itemToIncrease.quantity += 1;
@@ -40,7 +55,7 @@ const cartSlice = createSlice({
     decreaseItemQuantity: (state, action) => {
       const { id } = action.payload;
       const itemToDecrease = state.items.find(
-        (cartItem) => cartItem?.item?.card?.info?.id === id
+        (cartItem) => cartItem.item.dish_id === id
       );
 
       if (itemToDecrease && itemToDecrease.quantity > 1) {
