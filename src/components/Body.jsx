@@ -1,10 +1,10 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { useEffect, useRef, useState } from 'react';
-import useRestaurants from '../hooks/useRestaurants';
-import { GET_RESTAURANTS_URL } from '../utils/constants';
-import BannerList from './BannerList';
-import FoodList from './FoodList';
-import RestaurantList from './RestaurantList';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
+import useRestaurants from "../hooks/useRestaurants";
+import { GET_RESTAURANTS_URL } from "../utils/constants";
+import BannerList from "./BannerList";
+import FoodList from "./FoodList";
+import RestaurantList from "./RestaurantList";
 
 const Body = () => {
   const { banners, foods, restaurants, isLoading } =
@@ -12,16 +12,20 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const serachRef = useRef();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = (text) => {
+    if (!text) {
+      setFilteredRestaurants(restaurants);
+      return;
+    }
 
-    setFilteredRestaurants(
-      restaurants.filter((rest) =>
-        rest.info.name
-          .toLowerCase()
-          .includes(serachRef.current.value.toLowerCase())
-      )
-    );
+    const newFilteredRestaurants = restaurants.flatMap((rest) => {
+      const description = `${rest.name} ${rest.district} ${rest.province} ${rest.ward} ${rest.table_count} ${rest.hotline}`;
+      if (description.toLowerCase().includes(text.toLowerCase())) {
+        return [rest];
+      }
+      return [];
+    });
+    setFilteredRestaurants(newFilteredRestaurants);
   };
 
   useEffect(() => {
@@ -29,33 +33,31 @@ const Body = () => {
   }, [isLoading]);
 
   return (
-    <div className='bg-white relative py-8'>
+    <div className="bg-white relative py-8">
       {/* banners */}
       <BannerList banners={banners} isLoading={isLoading} />
 
       {/* food list */}
-      <FoodList foods={foods} isLoading={isLoading} />
+      {/* <FoodList foods={foods} isLoading={isLoading} /> */}
 
       {/* search bar */}
-      <form
-        onSubmit={handleSearch}
-        className='flex gap-2 md:gap-4 max-w-[560px] w-[90%] mx-auto mt-6'
-      >
+      <form className="flex gap-2 md:gap-4 max-w-[560px] w-[90%] mx-auto mt-6">
         <input
-          type='search'
-          name='search'
-          id='search'
-          placeholder='Search for Chicken Biriyani'
-          className='p-2 px-4 rounded-md border outline-none focus-within:border-orange-400 border-gray-200 grow w-full'
+          placeholder="Search restaurants..."
+          className="p-2 px-4 rounded-md border outline-none border-orange-400 grow w-full"
           ref={serachRef}
+          onChange={(e) => {
+            const textInput = e.target.value.trim();
+            handleSearch(textInput);
+          }}
         />
-        <button
-          type='submit'
-          className='bg-orange-400 basis-2/12 text-center text-white p-2 flex justify-center gap-2 items-center md:px-8 rounded-md text-sm md:text-base'
+        {/* <button
+          type="submit"
+          className="bg-orange-400 basis-2/12 text-center text-white p-2 flex justify-center gap-2 items-center md:px-8 rounded-md text-sm md:text-base"
         >
-          <MagnifyingGlassIcon className='w-4 h-4' />{' '}
-          <span className='hidden md:block'>Search</span>
-        </button>
+          <MagnifyingGlassIcon className="w-4 h-4" />{" "}
+          <span className="hidden md:block">Search</span>
+        </button> */}
       </form>
 
       {/* restaurant list */}

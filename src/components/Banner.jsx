@@ -1,9 +1,7 @@
-import { CDN_URL } from '../utils/constants';
-
-const Banner = ({ banner }) => {
+const Banner = ({ srcImage }) => {
   return (
-    <div className='keen-slider__slide'>
-      <img className='block w-full' src={CDN_URL + banner?.imageId} alt='' />
+    <div className="keen-slider__slide">
+      <img className="block w-full" src={srcImage} alt="" />
     </div>
   );
 };
