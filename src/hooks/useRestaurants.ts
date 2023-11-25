@@ -23,26 +23,6 @@ const useRestaurants = (url) => {
       const restaurants: Restaurant[] = data ? data.restaurants : [];
 
       setRestaurants(restaurants);
-
-      // if (data?.data) {
-      //   setBanners(
-      //     data?.data?.cards.filter(
-      //       (items) => items?.card?.card?.id === "topical_banner"
-      //     )[0]
-      //   );
-
-      //   setFoods(
-      //     data?.data?.cards.filter(
-      //       (items) => items?.card?.card?.id === "whats_on_your_mind"
-      //     )[0]
-      //   );
-
-      //   setRestaurants(
-      //     data?.data?.cards.filter(
-      //       (items) => items?.card?.card?.id === "restaurant_grid_listing"
-      //     )[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-      //   );
-      // }
     } catch (err) {
       console.log(err.response);
       setError(err.response);
