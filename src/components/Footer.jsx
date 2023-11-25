@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <div className="container-max text-center py-4 border-t">
-      Foody, made by HCMUT
+      Made by TEAM 100
     </div>
   );
 };
