@@ -38,15 +38,6 @@ const Header = () => {
       <div className="container-max flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-4">
           <Logo />
-
-          <button
-            onClick={handleOpenModal}
-            className="text-xs md:text-sm flex items-center gap-1"
-          >
-            <MapPinIcon className="w-4 h-4 text-gray-700" />
-            {address?.city}
-            <ChevronDownIcon className="w-4 h-4 text-orange-500" />
-          </button>
         </div>
 
         {isLocationModalOpen ? <LocationModal /> : null}
@@ -59,24 +50,6 @@ const Header = () => {
             >
               <HomeIcon className="w-4 h-4 text-gray-700" />{" "}
               <p className="hidden md:block">Home</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/about"
-              className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-            >
-              <BuildingOfficeIcon className="w-4 h-4 text-gray-700" />{" "}
-              <p className="hidden md:block">About</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/contact"
-              className="p-2 md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-            >
-              <PhoneIcon className="w-4 h-4 text-gray-700" />{" "}
-              <p className="hidden md:block">Contact</p>
             </Link>
           </li>
           <li>
