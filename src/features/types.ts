@@ -9,4 +9,12 @@ export type Restaurant = {
   number: string;
 };
 
+export type Dish = {
+  dish_id: string;
+  name: string;
+  price: number;
+  image: string;
+  type: string;
+};
+
 export type Banner = {};

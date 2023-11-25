@@ -1,11 +1,12 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice, current } from "@reduxjs/toolkit";
+import { Dish } from "../types";
 
-const initialState = {
-  items: JSON.parse(localStorage.getItem('cart')) || [],
+const initialState: any = {
+  items: [],
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
@@ -14,14 +15,14 @@ const cartSlice = createSlice({
         quantity: 1,
       });
 
-      localStorage.setItem('cart', JSON.stringify(state.items));
+      localStorage.setItem("cart", JSON.stringify(state.items));
     },
 
     removeFromCart: (state, action) => {
       state.items = state.items.filter(
         (cartItem) => cartItem?.item?.card?.info?.id !== action.payload.id
       );
-      localStorage.setItem('cart', JSON.stringify(state.items));
+      localStorage.setItem("cart", JSON.stringify(state.items));
     },
 
     increaseItemQuantity: (state, action) => {
@@ -33,7 +34,7 @@ const cartSlice = createSlice({
 
       if (itemToIncrease) {
         itemToIncrease.quantity += 1;
-        localStorage.setItem('cart', JSON.stringify(state.items));
+        localStorage.setItem("cart", JSON.stringify(state.items));
       }
     },
     decreaseItemQuantity: (state, action) => {
@@ -44,17 +45,17 @@ const cartSlice = createSlice({
 
       if (itemToDecrease && itemToDecrease.quantity > 1) {
         itemToDecrease.quantity -= 1;
-        localStorage.setItem('cart', JSON.stringify(state.items));
+        localStorage.setItem("cart", JSON.stringify(state.items));
       }
     },
     clearCart: (state) => {
       state.items = [];
-      localStorage.removeItem('cart');
+      localStorage.removeItem("cart");
     },
   },
 });
 
-export const selectItemsInCart = ({ cart }) => cart?.items;
+export const selectItemsInCart = ({ cart }): Dish[] => cart?.items;
 
 export const selectTotalPrice = ({ cart }) => {
   return cart?.items.reduce((total, cartItem) => {

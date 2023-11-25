@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import RestaurantCard from "./RestaurantCard";
 import ShimmerCard from "./ShimmerCard";
+import React, { FC } from "react";
+import { Restaurant } from "../features/types";
 
-const RestaurantList = ({ isLoading, restaurants }) => {
-  console.log("huy list: ", restaurants);
+type RestaurantListProps = {
+  isLoading: boolean;
+  restaurants: Restaurant[];
+};
 
+const RestaurantList: FC<RestaurantListProps> = ({
+  isLoading,
+  restaurants,
+}) => {
   return (
     <div className="container-max">
       <h1 className="my-4 mt-8 font-bold text-2xl text-zinc-700">
@@ -17,7 +25,7 @@ const RestaurantList = ({ isLoading, restaurants }) => {
         ) : restaurants && restaurants.length > 0 ? (
           restaurants.map((restaurant, i) => (
             <Link
-              to={`/restaurant`}
+              to={`/restaurants/${restaurant.res_id}`}
               className="hover:scale-95 transition ease-in-out duration-300 relative z-10"
               key={i}
             >
