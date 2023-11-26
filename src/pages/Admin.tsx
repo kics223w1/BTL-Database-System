@@ -230,7 +230,7 @@ const Admin = () => {
   return (
     <>
       <div className="w-full h-[90vh] flex items-center justify-center py-10 px-10">
-        <div className="flex flex-col gap-4 w-full h-full">
+        <div className="flex flex-col items-center justify-center gap-4 w-full h-full">
           <DataGrid
             rows={rows}
             columns={columns}
@@ -260,7 +260,7 @@ const Admin = () => {
           />
           <div className="flex items-center justify-center w-full gap-5">
             <button
-              className="bg-orange-600 hover:bg-orange-400 p-4 rounded"
+              className="bg-orange-600 hover:bg-orange-400 p-4 w-[250px] rounded"
               onClick={() => {
                 setIsConfirmDialogVisible(true);
               }}
@@ -268,7 +268,7 @@ const Admin = () => {
               Delete selected staffs
             </button>
             <button
-              className="bg-orange-600 hover:bg-orange-400 p-4 rounded"
+              className="bg-orange-600 hover:bg-orange-400 p-4 w-[250px] rounded"
               onClick={() => {
                 setIsAddStaffDialogVisible(true);
               }}
