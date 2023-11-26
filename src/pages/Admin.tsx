@@ -23,7 +23,8 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import ConfirmDialog from "../components/confirm-dialog";
+import ConfirmDialog from "../components/dialogs/confirm-dialog";
+import AddStaffDialog from "../components/dialogs/add-staff-dialog";
 
 const convertStaffsToRows = (staffs: Staff[]) => {
   return staffs.flatMap((staff: Staff, index: number) => {
@@ -55,6 +56,7 @@ const Admin = () => {
     {}
   );
   const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState(false);
+  const [isAddStaffDialogVisible, setIsAddStaffDialogVisible] = useState(false);
 
   useEffect(() => {
     const setup = async () => {
@@ -265,7 +267,12 @@ const Admin = () => {
             >
               Delete selected staffs
             </button>
-            <button className="bg-orange-600 hover:bg-orange-400 p-4 rounded">
+            <button
+              className="bg-orange-600 hover:bg-orange-400 p-4 rounded"
+              onClick={() => {
+                setIsAddStaffDialogVisible(true);
+              }}
+            >
               Add new staff
             </button>
           </div>
@@ -285,6 +292,15 @@ const Admin = () => {
         }}
         handleClose={() => {
           setIsConfirmDialogVisible(false);
+        }}
+      />
+      <AddStaffDialog
+        isOpen={isAddStaffDialogVisible}
+        handleClose={() => {
+          setIsAddStaffDialogVisible(false);
+        }}
+        handleAgree={() => {
+          setIsAddStaffDialogVisible(false);
         }}
       />
     </>

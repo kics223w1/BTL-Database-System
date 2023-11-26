@@ -42,6 +42,7 @@
     "@mui/material": "^5.14.18",
     "@mui/x-data-grid": "^6.18.2",
     "@mui/x-data-grid-generator": "^6.18.2",
+    "@mui/x-date-pickers": "^6.18.2",
     "@parcel/babel-preset-env": "^2.9.3",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
