@@ -50,7 +50,7 @@ const RestaurantOrder = () => {
         className="bg-orange-400 text-white py-1 px-4 rounded-md items-center gap-2 hidden md:flex"
         onClick={handleOnclick}
       >
-        Book table(s)
+        Book tables
       </button>
     </div>
   );
