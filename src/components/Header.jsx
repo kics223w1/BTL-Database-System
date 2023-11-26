@@ -3,6 +3,7 @@ import {
   Bars3Icon,
   HomeIcon,
   MagnifyingGlassIcon,
+  UserIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -55,6 +56,15 @@ const Header = () => {
                   {items.length}
                 </p>
               }
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/admin"
+              className="p-2 relative md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
+            >
+              <UserIcon className="w-4 h-4 text-gray-700" />
+              <p className="hidden md:block">Admin</p>
             </Link>
           </li>
         </ul>

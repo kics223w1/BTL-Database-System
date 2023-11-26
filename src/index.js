@@ -1,24 +1,25 @@
-import React, { lazy, Suspense } from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Auth0Provider } from '@auth0/auth0-react';
-import App from './App';
-import About from './pages/About';
-import Cart from './pages/Cart';
-import Error from './pages/Error';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Restaurant from './pages/Restaurant';
-import Search from './pages/Search';
-import store from './store/store';
-import './styles.css';
+import React, { lazy, Suspense } from "react";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
+import App from "./App";
+import About from "./pages/About";
+import Cart from "./pages/Cart";
+import Error from "./pages/Error";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Restaurant from "./pages/Restaurant";
+import Search from "./pages/Search";
+import store from "./store/store";
+import "./styles.css";
+import Admin from "./pages/Admin";
 
-const Contact = lazy(() => import('./pages/Contact'));
+const Contact = lazy(() => import("./pages/Contact"));
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     children: [
       {
@@ -26,19 +27,19 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'search',
+        path: "search",
         element: <Search />,
       },
       {
-        path: 'about',
+        path: "about",
         element: <About />,
       },
       {
-        path: 'cart',
+        path: "cart",
         element: <Cart />,
       },
       {
-        path: 'contact',
+        path: "contact",
         element: (
           <Suspense fallback={<h1>Loading...</h1>}>
             <Contact />
@@ -46,19 +47,23 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'login',
+        path: "login",
         element: <Login />,
       },
       {
-        path: 'restaurants/:id',
+        path: "restaurants/:id",
         element: <Restaurant />,
+      },
+      {
+        path: "admin",
+        element: <Admin />,
       },
     ],
     errorElement: <Error />,
   },
 ]);
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(

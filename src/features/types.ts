@@ -23,4 +23,19 @@ export type Discount = {
   value: number;
 };
 
+export type Staff = {
+  staff_id: string;
+  identification: string;
+  name: string;
+  gender: string;
+  dob: string;
+  role: string;
+  manager_id: string;
+  province: string;
+  district: string;
+  ward: string;
+  number: string;
+  res_id: string;
+};
+
 export type Banner = {};
