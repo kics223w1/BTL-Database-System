@@ -41,9 +41,19 @@ const OrderSummary = () => {
         {/* order details */}
         <div className="py-4 text-lg space-y-4 border-b">
           <div className="flex justify-between items-center font-semibold">
-            <p className="font-normal">Price:</p>
+            <p className="font-normal">Dishes price:</p>
             <p>{totalPrice} VND</p>
           </div>
+          {booking && (
+            <div className="flex justify-between items-center font-semibold">
+              <p className="font-normal">
+                Booked {booking.booking.tables}{" "}
+                {booking.booking.tables > 1 ? "tables" : "table"} on{" "}
+                {booking.booking.date}:
+              </p>
+              <p>0 VND</p>
+            </div>
+          )}
           {usedDiscounts.map((discount, index) => {
             return (
               <div
