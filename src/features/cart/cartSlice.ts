@@ -45,8 +45,6 @@ const cartSlice = createSlice({
         (cartItem) => cartItem.item.dish_id === id
       );
 
-      console.log("huy: ", itemToIncrease);
-
       if (itemToIncrease) {
         itemToIncrease.quantity += 1;
         localStorage.setItem("cart", JSON.stringify(state.items));

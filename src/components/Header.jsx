@@ -14,15 +14,12 @@ import {
   openLocationModal,
   toggleMenu,
 } from "../features/app/appSlice";
-import LocationModal from "./LocationModal";
-import { selectAddress } from "../features/address/addressSlice";
 
 const Header = () => {
   const { isMenuOpen, isLocationModalOpen } = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
   const items = useSelector(selectItemsInCart);
-  const { address } = useSelector(selectAddress);
 
   const handleToggleMenu = () => dispatch(toggleMenu());
 
@@ -35,8 +32,6 @@ const Header = () => {
         <div className="flex items-center gap-2 md:gap-4">
           <Logo />
         </div>
-
-        {isLocationModalOpen ? <LocationModal /> : null}
 
         <ul className="text-zinc-700 ml-auto gap-2 md:gap-4 items-center hidden md:flex">
           <li>
@@ -71,12 +66,11 @@ const Header = () => {
             Logout{" "}
           </button>
         ) : (
-          <button
-            onClick={() => loginWithRedirect()}
-            className="ml-4 bg-orange-400 text-white p-2 px-4 rounded-md items-center gap-2 hidden md:flex"
-          >
-            Login
-          </button>
+          <Link to="/login">
+            <button className="ml-4 bg-orange-400 text-white p-2 px-4 rounded-md items-center gap-2 hidden md:flex">
+              Login
+            </button>
+          </Link>
         )}
 
         {!isMenuOpen ? (
