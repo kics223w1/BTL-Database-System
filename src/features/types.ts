@@ -17,4 +17,10 @@ export type Dish = {
   type: string;
 };
 
+export type Discount = {
+  discount_id: string;
+  name: string;
+  value: number;
+};
+
 export type Banner = {};

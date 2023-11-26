@@ -12,7 +12,7 @@ const Cart = () => {
 
       <div className="min-h-[60vh] pb-8 md:flex gap-8">
         <CartItemList />
-        {cartItems && cartItems.length !== 0 && <OrderSummary />}
+        {cartItems && cartItems.length > 0 && <OrderSummary />}
       </div>
     </div>
   );

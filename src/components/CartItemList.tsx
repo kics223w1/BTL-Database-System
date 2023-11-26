@@ -9,9 +9,7 @@ import {
   removeFromCart,
   selectItemsInCart,
 } from "../features/cart/cartSlice";
-import { CDN_URL } from "../utils/constants";
 import React, { FC } from "react";
-import { Dish } from "../features/types";
 
 type CartItemListProps = {};
 
