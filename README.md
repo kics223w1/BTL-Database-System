@@ -9,6 +9,7 @@
 - Import the file to Proxyman -> Enable the tool
 - Cd to this project -> Run `npm i` then `npm start`
 - Go to `http://localhost:1234`
+- Click the Viet Kitchen restaurant to test the UI
 
 ### Screenshots
 
