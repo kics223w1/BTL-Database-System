@@ -36,23 +36,23 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
   handleClose,
   handleAgree,
 }) => {
-  const [identification, setIdentification] = useState(
-    selectedStaff.identification
-  );
-  const [name, setName] = useState(selectedStaff.staff_name);
+  const [identification, setIdentification] = useState("");
+  const [name, setName] = useState("");
   const [gender, setGender] = useState<string>(
-    selectedStaff.gender === 1 ? "Male" : "Female"
+    selectedStaff.gender === 1
+      ? "Male"
+      : selectedStaff.gender === 2
+      ? "Female"
+      : "NULL"
   );
-  const [dateOfBirth, setDateOfBirth] = useState(selectedStaff.date_of_birth);
-  const [managerID, setManagerID] = useState(selectedStaff.manager_id);
-  const [province, setProvince] = useState(selectedStaff.province);
-  const [district, setDistrict] = useState(selectedStaff.district);
-  const [ward, setWard] = useState(selectedStaff.ward);
-  const [addressNumber, setAddressNumber] = useState(
-    selectedStaff.address_number
-  );
-  const [restaurantId, setRestaurantId] = useState(selectedStaff.res_id);
-  const [accountId, setAccountId] = useState(selectedStaff.account_id);
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [managerID, setManagerID] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
+  const [addressNumber, setAddressNumber] = useState("");
+  const [restaurantId, setRestaurantId] = useState("");
+  const [accountId, setAccountId] = useState("");
 
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -65,23 +65,23 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
     setErrorMessages([]);
     setSuccessMessage("");
 
-    const newStaff: StaffForUpdating = {
+    const updatedStaff: StaffForUpdating = {
       id: selectedStaff.staff_id,
-      name: name,
-      identification,
-      gender: gender === "Male" ? 1 : 2,
-      date_of_birth: dateOfBirth,
-      manager_id: managerID ? managerID : null,
-      province,
-      district,
-      ward,
-      address_number: addressNumber,
-      res_id: restaurantId,
-      accID: accountId,
+      name: name ? name : "NULL",
+      identification: identification ? identification : "NULL",
+      gender: gender === "Male" ? 1 : gender === "Female" ? 2 : "NULL",
+      date_of_birth: dateOfBirth ? dateOfBirth : "NULL",
+      manager_id: managerID ? managerID : "NULL",
+      province: province ? province : "NULL",
+      district: district ? district : "NULL",
+      ward: ward ? ward : "NULL",
+      address_number: addressNumber ? addressNumber : "NULL",
+      res_id: restaurantId ? restaurantId : "NULL",
+      accID: accountId ? accountId : "NULL",
     };
 
     const { data } = await axios.patch(`${BACKEND_URL}/staff`, {
-      staff: newStaff,
+      staff: updatedStaff,
     });
 
     if (data.success) {
@@ -99,11 +99,11 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Insert staff"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{`Update staff ${selectedStaff.staff_id} with ID: ${selectedStaff.staff_id}`}</DialogTitle>
 
       <DialogContent className="flex flex-col w-[600px]">
         <DialogContentText id="alert-dialog-description">
-          Please fill in information below
+          Leave blank for the fields that you don't want to update
         </DialogContentText>
 
         <TextField
@@ -144,6 +144,7 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
           >
             <MenuItem value={"Male"}>Male</MenuItem>
             <MenuItem value={"Female"}>Female</MenuItem>
+            <MenuItem value={"NULL"}>NULL, no update</MenuItem>
           </Select>
         </FormControl>
 

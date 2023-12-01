@@ -57,17 +57,17 @@ export type StaffForAdding = {
 
 export type StaffForUpdating = {
   id: string;
-  identification: string;
-  name: string;
-  gender: number;
-  date_of_birth: string;
+  identification: string | null;
+  name: string | null;
+  gender: number | null | string;
+  date_of_birth: string | null;
   manager_id: string | null;
-  province: string;
-  district: string;
-  ward: string;
-  address_number: string;
-  res_id: string;
-  accID: string;
+  province: string | null;
+  district: string | null;
+  ward: string | null;
+  address_number: string | null;
+  res_id: string | null;
+  accID: string | null;
 };
 
 export type Banner = {};
