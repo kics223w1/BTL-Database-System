@@ -1,14 +1,11 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
 import useRestaurants from "../hooks/useRestaurants";
-import { GET_RESTAURANTS_URL } from "../utils/constants";
 import BannerList from "./BannerList";
-import FoodList from "./FoodList";
 import RestaurantList from "./RestaurantList";
 
 const Body = () => {
-  const { banners, foods, restaurants, isLoading } =
-    useRestaurants(GET_RESTAURANTS_URL);
+  const { banners, foods, restaurants, promotions, isLoading } =
+    useRestaurants();
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const serachRef = useRef();
 
@@ -35,7 +32,6 @@ const Body = () => {
   return (
     <div className="bg-white relative py-8">
       {/* banners */}
-      <BannerList banners={banners} isLoading={isLoading} />
 
       {/* food list */}
       {/* <FoodList foods={foods} isLoading={isLoading} /> */}
@@ -63,6 +59,8 @@ const Body = () => {
       {/* restaurant list */}
 
       <RestaurantList isLoading={isLoading} restaurants={filteredRestaurants} />
+
+      {/* <BannerList promotions={promotions} /> */}
     </div>
   );
 };

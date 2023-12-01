@@ -115,11 +115,11 @@ const Admin = () => {
 
       const objStaff: { data: Staff[]; success: boolean } | undefined =
         responseStaff.data;
-      const newStaffs = objStaff ? objStaff.data : [];
+      const newStaffs = objStaff && objStaff.data ? objStaff.data : [];
 
       const objRes: { data: Restaurant[]; success: boolean } | undefined =
         responseRes.data;
-      const newRestaurants = objRes ? objRes.data : [];
+      const newRestaurants = objRes && objRes.data ? objRes.data : [];
 
       setStaffs(newStaffs);
       setRestaurants(newRestaurants);

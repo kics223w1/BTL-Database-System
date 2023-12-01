@@ -10,6 +10,16 @@ export type Restaurant = {
   total_slot: number;
 };
 
+export type Promotion = {
+  promotion_id: string;
+  promotion_name: string;
+  promotion_type: string;
+  start_time: string;
+  end_time: string;
+  reduced_price: number | null;
+  reduced_percent: number | null;
+};
+
 export type Dish = {
   dish_id: string;
   name: string;

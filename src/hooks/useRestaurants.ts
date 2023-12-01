@@ -2,14 +2,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAddress } from "../features/address/addressSlice";
-import { Restaurant } from "../features/types";
+import { Promotion, Restaurant } from "../features/types";
+import { BACKEND_URL } from "../utils/constants";
 
-const useRestaurants = (url) => {
+const useRestaurants = () => {
   const { address } = useSelector(selectAddress);
   const [banners, setBanners] = useState([]);
   const [foods, setFoods] = useState([]);
+
   const [topRestaurants, setTopRestaurants] = useState([]);
+
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -19,10 +24,21 @@ const useRestaurants = (url) => {
 
     try {
       setIsLoading(true);
-      const { data } = await axios.get("https://api.team100.com/restaurants");
-      const restaurants: Restaurant[] = data ? data.restaurants : [];
 
-      setRestaurants(restaurants);
+      const [responsePromo, responseRes] = await Promise.all([
+        axios.get(`${BACKEND_URL}/promotions`),
+        axios.get(`${BACKEND_URL}/restaurant`),
+      ]);
+
+      const objPromo: { data: Promotion[]; success: boolean } | undefined =
+        responsePromo.data;
+      const newPromotions = objPromo && objPromo.data ? objPromo.data : [];
+      setPromotions(newPromotions);
+
+      const objRes: { data: Restaurant[]; success: boolean } | undefined =
+        responseRes.data;
+      const newRestaurants = objRes && objRes.data ? objRes.data : [];
+      setRestaurants(newRestaurants);
     } catch (err) {
       console.log(err.response);
       setError(err.response);
@@ -40,6 +56,7 @@ const useRestaurants = (url) => {
     foods,
     topRestaurants,
     restaurants,
+    promotions,
     isLoading,
     error,
     triggerGetRestaurants: () => {
