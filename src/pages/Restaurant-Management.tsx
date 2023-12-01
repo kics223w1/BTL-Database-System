@@ -22,6 +22,7 @@ import kichi from "../../assets/kichi.png";
 // @ts-ignore
 import vietkitchen from "../../assets/vietkitchen.png";
 import ConfirmDeleteTable from "../components/dialogs/confirm-delete-table";
+import AddTableDialog from "../components/dialogs/add-table-dialog";
 
 const getRestaurantImage = () => {
   const arr = [
@@ -42,6 +43,9 @@ const RestaurantManagement = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [deletedRestaurant, setDeletedRestaurant] = useState<
+    Restaurant | undefined
+  >(undefined);
+  const [insertedTableRestaurant, setInsertedTableRestaurant] = useState<
     Restaurant | undefined
   >(undefined);
 
@@ -67,7 +71,7 @@ const RestaurantManagement = () => {
   const handleInsertTable = async () => {};
 
   return (
-    <div className="w-full h-[90vh] px-36 py-14">
+    <div className="w-full h-[90vh] px-36 py-14 mb-10 overflow-auto">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
         {restaurants.map((restaurant, i) => {
           const srcImage = getRestaurantImage();
@@ -106,14 +110,20 @@ const RestaurantManagement = () => {
                 <p className="text-zinc-600">{restaurant.total_slot}</p>
               </div>
 
-              <div className="flex items-center gap-2 h-10">
-                <button className="bg-orange-400 hover:bg-orange-400/90 rounded w-full">
+              <div className="flex items-center gap-2 h-fit mt-1">
+                <button
+                  className="bg-orange-400 hover:bg-orange-400/90 py-2 rounded w-full"
+                  onClick={() => {
+                    setInsertedTableRestaurant(restaurant);
+                  }}
+                >
                   Insert 1 table
                 </button>
                 <button
-                  className={`bg-orange-400 hover:bg-orange-400/90 rounded w-full ${
-                    restaurant.table_count <= 0 &&
-                    "opacity-50 cursor-not-allowed"
+                  className={`bg-orange-400 py-2 rounded w-full ${
+                    restaurant.table_count <= 0
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-orange-400/90"
                   }`}
                   disabled={restaurant.table_count <= 0}
                   onClick={() => {
@@ -134,6 +144,15 @@ const RestaurantManagement = () => {
             setDeletedRestaurant(undefined);
           }}
           restaurant={deletedRestaurant}
+        />
+      )}
+      {insertedTableRestaurant && (
+        <AddTableDialog
+          isOpen={insertedTableRestaurant !== undefined}
+          handleClose={() => {
+            setInsertedTableRestaurant(undefined);
+          }}
+          restaurant={insertedTableRestaurant}
         />
       )}
     </div>

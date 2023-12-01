@@ -86,12 +86,6 @@ export type Table = {
   slot_count: number;
 };
 
-export type TableForAdding = {
-  res_id: string;
-  table_id: string;
-  slot_count: number;
-};
-
 export type ReservedTable = {
   reservation_id: string;
   res_id: string;
