@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Restaurant, Staff } from "../features/types";
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, useGridApiRef } from "@mui/x-data-grid";
 import ConfirmDialog from "../components/dialogs/confirm-dialog";
 import AddStaffDialog from "../components/dialogs/add-staff-dialog";
+import UpdateStaffDialog from "../components/dialogs/update-staff-dialog";
+import toast from "react-hot-toast";
 
 const columns: GridColDef[] = [
   { field: "staff_id", headerName: "staff_id", width: 200 },
@@ -92,10 +94,17 @@ const Admin = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   const [rows, setRows] = useState<any[]>([]);
-  const [selectedStaffs, setSelectedStaffs] = useState<Staff[]>([]);
   const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState(false);
   const [isAddStaffDialogVisible, setIsAddStaffDialogVisible] = useState(false);
+  const [isUpdateStaffDialogVisible, setIsUpdateStaffDialogVisible] =
+    useState(false);
   const [isLoadingGetStaffs, setIsLoadingGetStaffs] = useState(false);
+
+  const [selectedStaff, setSelectedStaff] = useState<Staff | undefined>(
+    undefined
+  );
+
+  const apiRef = useGridApiRef();
 
   useEffect(() => {
     const setup = async () => {
@@ -114,6 +123,9 @@ const Admin = () => {
 
       setStaffs(newStaffs);
       setRestaurants(newRestaurants);
+
+      apiRef.current.setRowSelectionModel([]);
+      setSelectedStaff(undefined);
     };
     setup();
   }, []);
@@ -121,6 +133,9 @@ const Admin = () => {
   useEffect(() => {
     const newRows = convertStaffsToRows(staffs);
     setRows(newRows);
+
+    apiRef.current.setRowSelectionModel([]);
+    setSelectedStaff(undefined);
   }, [staffs]);
 
   const handleGetStaffs = async () => {
@@ -136,6 +151,34 @@ const Admin = () => {
 
     setStaffs(newStaffs);
     setRows(newRows);
+
+    apiRef.current.setRowSelectionModel([]);
+    setSelectedStaff(undefined);
+  };
+
+  const handleDeleteStaff = async () => {
+    if (!selectedStaff) {
+      toast.error("Please select a staff to delete!");
+      return;
+    }
+    const response = await axios.delete(
+      `${BACKEND_URL}/staff?staff_id=${selectedStaff.staff_id}`
+    );
+
+    const obj: { data: string; success: boolean } | undefined = response.data;
+    if (!obj) {
+      toast.error("Something went wrong!");
+      return;
+    }
+
+    if (obj.success) {
+      toast.success(
+        `${obj.data} successfully, Please hit "Get staffs" to refresh!`
+      );
+      return;
+    }
+
+    toast.error(`${obj.data}`);
   };
 
   return (
@@ -145,6 +188,7 @@ const Admin = () => {
           <DataGrid
             rows={rows}
             columns={columns}
+            apiRef={apiRef}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 20 },
@@ -158,7 +202,13 @@ const Admin = () => {
               const newSelectedStaffs = staffs.flatMap((staff: Staff) => {
                 return staffIDs.includes(staff.staff_id) ? [staff] : [];
               });
-              setSelectedStaffs(newSelectedStaffs);
+              if (newSelectedStaffs.length > 0) {
+                setSelectedStaff(
+                  newSelectedStaffs[newSelectedStaffs.length - 1]
+                );
+              } else {
+                setSelectedStaff(undefined);
+              }
             }}
             checkboxSelection
           />
@@ -170,12 +220,12 @@ const Admin = () => {
               setIsAddStaffDialogVisible(true);
             }}
           >
-            Add new staff
+            Insert new staff
           </button>
           <button
             className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
             onClick={() => {
-              setIsConfirmDialogVisible(true);
+              setIsUpdateStaffDialogVisible(true);
             }}
           >
             Update selected staff
@@ -187,7 +237,7 @@ const Admin = () => {
               setIsConfirmDialogVisible(true);
             }}
           >
-            Delete selected staffs
+            Delete selected staff
           </button>
 
           <button
@@ -198,22 +248,24 @@ const Admin = () => {
           </button>
         </div>
       </div>
-      <ConfirmDialog
-        isOpen={isConfirmDialogVisible}
-        title={`Are you sure you want to delete ${selectedStaffs.length} ${
-          selectedStaffs.length > 1 ? "staffs" : "staff"
-        }?`}
-        description="This action cannot be undone."
-        handleAgree={() => {
-          setIsConfirmDialogVisible(false);
-        }}
-        handleDisagree={() => {
-          setIsConfirmDialogVisible(false);
-        }}
-        handleClose={() => {
-          setIsConfirmDialogVisible(false);
-        }}
-      />
+      {selectedStaff && (
+        <ConfirmDialog
+          isOpen={isConfirmDialogVisible}
+          title={`Are you sure you want to delete ${selectedStaff.staff_name} with ID: ${selectedStaff.staff_id} ?`}
+          description="This action cannot be undone."
+          handleAgree={async () => {
+            await handleDeleteStaff();
+
+            setIsConfirmDialogVisible(false);
+          }}
+          handleDisagree={() => {
+            setIsConfirmDialogVisible(false);
+          }}
+          handleClose={() => {
+            setIsConfirmDialogVisible(false);
+          }}
+        />
+      )}
       <AddStaffDialog
         restaurant={restaurants}
         staffs={staffs}
@@ -226,6 +278,20 @@ const Admin = () => {
           setIsAddStaffDialogVisible(false);
         }}
       />
+      {selectedStaff && (
+        <UpdateStaffDialog
+          restaurant={restaurants}
+          staffs={staffs}
+          selectedStaff={selectedStaff}
+          isOpen={isUpdateStaffDialogVisible}
+          handleClose={() => {
+            setIsUpdateStaffDialogVisible(false);
+          }}
+          handleAgree={() => {
+            setIsUpdateStaffDialogVisible(false);
+          }}
+        />
+      )}
     </>
   );
 };

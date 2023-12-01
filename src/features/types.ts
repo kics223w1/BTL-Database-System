@@ -55,4 +55,19 @@ export type StaffForAdding = {
   accID: string;
 };
 
+export type StaffForUpdating = {
+  id: string;
+  identification: string;
+  name: string;
+  gender: number;
+  date_of_birth: string;
+  manager_id: string | null;
+  province: string;
+  district: string;
+  ward: string;
+  address_number: string;
+  res_id: string;
+  accID: string;
+};
+
 export type Banner = {};
