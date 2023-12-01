@@ -22,10 +22,10 @@ export type Promotion = {
 
 export type Dish = {
   dish_id: string;
-  name: string;
+  dish_name: string;
   price: number;
-  image: string;
-  type: string;
+  dish_img: string;
+  dish_type: string;
 };
 
 export type Discount = {

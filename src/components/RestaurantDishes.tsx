@@ -3,10 +3,6 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 import React, { FC } from "react";
 import { Dish } from "../features/types";
-// @ts-ignore
-import burger from "../../assets/dishes/burger.png";
-// @ts-ignore
-import pizza from "../../assets/dishes/pizza.png";
 
 type RestaurantDishesProps = {
   dishes: Dish[];
@@ -24,27 +20,37 @@ const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
     <>
       <ul className="p-4">
         {dishes.map((dish, index) => {
-          const itemPrice = dish.price;
-          const srcImage = index % 2 === 0 ? burger : pizza;
-
           return (
             <li
               className="p-2 py-8 flex gap-4 md:gap-8 justify-between items-center border-b"
               key={index}
             >
-              <div className="basis-8/12 space-y-2">
-                <h2 className="text-xl font-semibold">{dish.name}</h2>
-                <p className="text-sm font-semibold">Price: {itemPrice} VND</p>
+              <div className="basis-8/12 space-y-2 flex flex-col gap-1">
+                <h2 className="text-xl font-semibold">{dish.dish_name}</h2>
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-semibold">Price:</span>
+                  <span className="text-sm font-medium">{dish.price} VND</span>
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-semibold">Type:</span>
+                  <span className="text-sm font-medium">{dish.dish_type}</span>
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-semibold">ID:</span>
+                  <span className="text-sm font-medium">{dish.dish_id}</span>
+                </div>
               </div>
 
               <div className="w-full basis-4/12 relative">
                 <img
                   className="w-full aspect-video object-contain rounded-md"
-                  src={srcImage}
+                  src={dish.dish_img}
                   alt=""
                 />
                 <button
-                  onClick={() => handleAddToCart({ ...dish, itemPrice })}
+                  onClick={() => handleAddToCart({ dish })}
                   className="bg-white text-orange-500 hover:bg-orange-500 hover:text-white font-bold p-2 px-6 rounded-md absolute shadow-md left-[50%] -bottom-5 -translate-x-[50%]"
                 >
                   ADD
