@@ -5,19 +5,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Restaurant, Table } from "../../features/types";
+import { ReservedTable, Restaurant, Table } from "../../features/types";
 import axios from "axios";
 import { BACKEND_URL } from "../../utils/constants";
 import toast from "react-hot-toast";
 import {
   FormControl,
   FormControlLabel,
-  FormLabel,
-  InputLabel,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
 } from "@mui/material";
 
 type ConfirmDeleteTableProps = {
@@ -35,29 +31,57 @@ const ConfirmDeleteTable: React.FC<ConfirmDeleteTableProps> = ({
     undefined
   );
   const [tables, setTables] = React.useState<Table[]>([]);
+  const [reservedTables, setReservedTables] = React.useState<ReservedTable[]>(
+    []
+  );
 
   React.useEffect(() => {
     const setup = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}/table`);
-        const obj: { data: Table[]; success: boolean } | undefined =
-          response.data;
+        const [responseTable, responseReservedTable] = await Promise.all([
+          axios.get(`${BACKEND_URL}/table`),
+          axios.get(`${BACKEND_URL}/reservedTable`),
+        ]);
 
-        if (!obj) {
+        // Table
+        const objTable: { data: Table[]; success: boolean } | undefined =
+          responseTable.data;
+        if (!objTable) {
           setTables([]);
-          return;
+        } else {
+          if (objTable.success) {
+            const resID = restaurant.res_id;
+            const newTables = objTable.data.flatMap((table) => {
+              return table.res_id === resID ? [table] : [];
+            });
+            setTables(newTables);
+          } else {
+            setTables([]);
+          }
         }
 
-        if (obj.success) {
-          const resID = restaurant.res_id;
-          const newTables = obj.data.flatMap((table) => {
-            return table.res_id === resID ? [table] : [];
-          });
-          setTables(newTables);
-          return;
+        // Reserved table
+        const objReservedTable:
+          | {
+              data: ReservedTable[];
+              success: boolean;
+            }
+          | undefined = responseReservedTable.data;
+        if (!objReservedTable) {
+          setReservedTables([]);
+        } else {
+          if (objReservedTable.success) {
+            const resID = restaurant.res_id;
+            const newReservedTables = objReservedTable.data.flatMap(
+              (reservedTable) => {
+                return reservedTable.res_id === resID ? [reservedTable] : [];
+              }
+            );
+            setReservedTables(newReservedTables);
+          } else {
+            setReservedTables([]);
+          }
         }
-
-        setTables([]);
       } catch (error) {
         setTables([]);
       }
@@ -98,9 +122,7 @@ const ConfirmDeleteTable: React.FC<ConfirmDeleteTableProps> = ({
         return;
       }
 
-      toast.error(
-        `This table is reserved, you can't delete it. Please delete the table which hasn't been reserved! \n\n Database error: ${obj.data}`
-      );
+      toast.error(`Database error: ${obj.data}`);
     } catch (error) {
       setSelectedTable(undefined);
       toast.error(`${error}`);
@@ -121,7 +143,7 @@ const ConfirmDeleteTable: React.FC<ConfirmDeleteTableProps> = ({
         <DialogContentText id="alert-dialog-description">
           {tables.length === 0
             ? "This restaurant has 0 table, please close the dialog."
-            : "Select table to delete"}
+            : "Select table to delete, you can't delete reserved table"}
         </DialogContentText>
 
         <FormControl>
@@ -131,11 +153,16 @@ const ConfirmDeleteTable: React.FC<ConfirmDeleteTableProps> = ({
             name="radio-buttons-group"
           >
             {tables.map((table, index) => {
+              const isEnabled = reservedTables.every(
+                (reservedTables) => reservedTables.table_id !== table.table_id
+              );
+
               return (
                 <FormControlLabel
                   key={`TableID_${restaurant.res_id}_${index}`}
                   control={
                     <Radio
+                      disabled={!isEnabled}
                       checked={
                         selectedTable &&
                         selectedTable.table_id === table.table_id
@@ -143,9 +170,13 @@ const ConfirmDeleteTable: React.FC<ConfirmDeleteTableProps> = ({
                     />
                   }
                   onClick={() => {
-                    setSelectedTable(table);
+                    if (isEnabled) {
+                      setSelectedTable(table);
+                    }
                   }}
-                  label={`${table.table_id}, slot: ${table.slot_count}`}
+                  label={`${table.table_id}, slot: ${table.slot_count} ${
+                    isEnabled ? "" : "(reserved)"
+                  }`}
                 />
               );
             })}

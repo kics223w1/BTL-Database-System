@@ -92,4 +92,10 @@ export type TableForAdding = {
   slot_count: number;
 };
 
+export type ReservedTable = {
+  reservation_id: string;
+  res_id: string;
+  table_id: string;
+};
+
 export type Banner = {};
