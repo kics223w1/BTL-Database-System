@@ -80,4 +80,16 @@ export type StaffForUpdating = {
   accID: string | null;
 };
 
+export type Table = {
+  res_id: string;
+  table_id: string;
+  slot_count: number;
+};
+
+export type TableForAdding = {
+  res_id: string;
+  table_id: string;
+  slot_count: number;
+};
+
 export type Banner = {};

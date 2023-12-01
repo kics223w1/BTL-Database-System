@@ -89,7 +89,7 @@ const convertStaffsToRows = (staffs: Staff[]) => {
   });
 };
 
-const Admin = () => {
+const StaffManagement = () => {
   const [staffs, setStaffs] = useState<Staff[]>([]);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
@@ -182,71 +182,65 @@ const Admin = () => {
   };
 
   return (
-    <>
-      <div className="w-full h-[90vh] flex flex-col justify-center gap-2 py-14 px-20">
-        <div className="w-full h-full min- overflow-auto">
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            apiRef={apiRef}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 20 },
-              },
-            }}
-            pageSizeOptions={[5, 10, 20, 50, 100]}
-            onRowSelectionModelChange={(indexes: any) => {
-              const staffIDs = indexes.map(
-                (index: any) => rows[index].staff_id
-              );
-              const newSelectedStaffs = staffs.flatMap((staff: Staff) => {
-                return staffIDs.includes(staff.staff_id) ? [staff] : [];
-              });
-              if (newSelectedStaffs.length > 0) {
-                setSelectedStaff(
-                  newSelectedStaffs[newSelectedStaffs.length - 1]
-                );
-              } else {
-                setSelectedStaff(undefined);
-              }
-            }}
-            checkboxSelection
-          />
-        </div>
-        <div className="flex items-center justify-center w-full gap-5">
-          <button
-            className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
-            onClick={() => {
-              setIsAddStaffDialogVisible(true);
-            }}
-          >
-            Insert new staff
-          </button>
-          <button
-            className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
-            onClick={() => {
-              setIsUpdateStaffDialogVisible(true);
-            }}
-          >
-            Update selected staff
-          </button>
+    <div className="flex flex-col w-full h-[90vh] justify-center py-14 px-32 gap-10">
+      <div className="w-full h-full overflow-auto">
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          apiRef={apiRef}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 20 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 20, 50, 100]}
+          onRowSelectionModelChange={(indexes: any) => {
+            const staffIDs = indexes.map((index: any) => rows[index].staff_id);
+            const newSelectedStaffs = staffs.flatMap((staff: Staff) => {
+              return staffIDs.includes(staff.staff_id) ? [staff] : [];
+            });
+            if (newSelectedStaffs.length > 0) {
+              setSelectedStaff(newSelectedStaffs[newSelectedStaffs.length - 1]);
+            } else {
+              setSelectedStaff(undefined);
+            }
+          }}
+          checkboxSelection
+        />
+      </div>
+      <div className="flex items-center justify-center w-full gap-5">
+        <button
+          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          onClick={() => {
+            setIsAddStaffDialogVisible(true);
+          }}
+        >
+          Insert new staff
+        </button>
+        <button
+          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          onClick={() => {
+            setIsUpdateStaffDialogVisible(true);
+          }}
+        >
+          Update selected staff
+        </button>
 
-          <button
-            className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
-            onClick={() => {
-              setIsConfirmDialogVisible(true);
-            }}
-          >
-            Delete selected staff
-          </button>
+        <button
+          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          onClick={() => {
+            setIsConfirmDialogVisible(true);
+          }}
+        >
+          Delete selected staff
+        </button>
 
-          <button
-            className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
-            onClick={handleGetStaffs}
-          >
-            {isLoadingGetStaffs ? "Loading..." : "Get staffs"}
-          </button>
-        </div>
+        <button
+          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          onClick={handleGetStaffs}
+        >
+          {isLoadingGetStaffs ? "Loading..." : "Get staffs"}
+        </button>
       </div>
       {selectedStaff && (
         <ConfirmDialog
@@ -292,8 +286,8 @@ const Admin = () => {
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 
-export default Admin;
+export default StaffManagement;
