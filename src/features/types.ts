@@ -22,10 +22,10 @@ export type Promotion = {
 
 export type Dish = {
   dish_id: string;
-  name: string;
+  dish_name: string;
   price: number;
-  image: string;
-  type: string;
+  dish_img: string;
+  dish_type: string;
 };
 
 export type Discount = {
@@ -78,6 +78,18 @@ export type StaffForUpdating = {
   address_number: string | null;
   res_id: string | null;
   accID: string | null;
+};
+
+export type Table = {
+  res_id: string;
+  table_id: string;
+  slot_count: number;
+};
+
+export type ReservedTable = {
+  reservation_id: string;
+  res_id: string;
+  table_id: string;
 };
 
 export type Banner = {};

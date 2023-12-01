@@ -13,7 +13,8 @@ import Restaurant from "./pages/Restaurant";
 import Search from "./pages/Search";
 import store from "./store/store";
 import "./styles.css";
-import Admin from "./pages/Admin";
+import StaffManagement from "./pages/Staff-Management";
+import RestaurantManagement from "./pages/Restaurant-Management";
 
 const Contact = lazy(() => import("./pages/Contact"));
 
@@ -55,8 +56,12 @@ const router = createBrowserRouter([
         element: <Restaurant />,
       },
       {
-        path: "admin",
-        element: <Admin />,
+        path: "staff",
+        element: <StaffManagement />,
+      },
+      {
+        path: "restaurant",
+        element: <RestaurantManagement />,
       },
     ],
     errorElement: <Error />,

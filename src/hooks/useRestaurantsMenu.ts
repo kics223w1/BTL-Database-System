@@ -1,38 +1,37 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { GET_RESTAURANTS_URL } from "../utils/constants";
-import { Dish, Restaurant } from "../features/types";
+import { Dish } from "../features/types";
+import { BACKEND_URL } from "../utils/constants";
 
-const useRestaurantsMenu = (restId) => {
-  const [restaurant, setRestaurant] = useState<Restaurant | undefined>(
-    undefined
-  );
+const useRestaurantsMenu = () => {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    (async () => {
+    const setup = async () => {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(
-          `https://api.team100.com/restaurant?id=${restId}`
-        );
-        const newRestaurant: Restaurant = data ? data.restaurant : undefined;
-        const newDishes: Dish[] = data ? data.dishes : [];
 
-        setRestaurant(newRestaurant);
-        setDishes(newDishes);
-      } catch (err) {
-        console.log(err.response);
-        setError(err.response);
-      } finally {
+        const responseFood = await axios.get(`${BACKEND_URL}/food`);
+
         setIsLoading(false);
+
+        const objFood: { data: Dish[]; success: boolean } | undefined =
+          responseFood.data;
+        const newDishes = objFood && objFood.data ? objFood.data : [];
+
+        setDishes(newDishes);
+      } catch (e) {
+        console.error("Get food error: ", e);
+        setDishes([]);
       }
-    })();
+    };
+
+    setup();
   }, []);
 
-  return { restaurant, dishes, isLoading, error };
+  return { dishes, isLoading, error };
 };
 
 export default useRestaurantsMenu;

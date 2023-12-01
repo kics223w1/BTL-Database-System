@@ -10,7 +10,7 @@ import RestaurantDishes from "../components/RestaurantDishes";
 
 const Restaurant = () => {
   const { id } = useParams();
-  const { restaurant, dishes, isLoading } = useRestaurantsMenu(id);
+  const { dishes, isLoading } = useRestaurantsMenu();
 
   return (
     <div className="container-md my-8">
@@ -18,8 +18,8 @@ const Restaurant = () => {
         <ShimmerRestaurant />
       ) : (
         <>
-          <RestaurantInfo restaurant={restaurant} />
-          <RestaurantOrder />
+          {/* <RestaurantInfo restaurant={restaurant} /> */}
+          {/* <RestaurantOrder /> */}
           <RestaurantDishes dishes={dishes} />
         </>
       )}

@@ -5,6 +5,7 @@ import {
   MagnifyingGlassIcon,
   UserIcon,
   ShoppingBagIcon,
+  HomeIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
@@ -60,11 +61,20 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to="/admin"
+              to="/staff"
               className="p-2 relative md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
             >
               <UserIcon className="w-4 h-4 text-gray-700" />
-              <p className="hidden md:block">Admin</p>
+              <p className="hidden md:block">Staff</p>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/restaurant"
+              className="p-2 relative hover:bg-gray-50 rounded-md flex items-center gap-2"
+            >
+              <HomeIcon className="w-4 h-4 text-gray-700" />
+              <p className="hidden md:block">Restaurant</p>
             </Link>
           </li>
         </ul>
