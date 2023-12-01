@@ -9,21 +9,26 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { DialogContentText } from "@mui/material";
-import { Restaurant, Staff, StaffForAdding } from "../../features/types";
+import {
+  Restaurant,
+  Staff,
+  StaffForAdding,
+  StaffForUpdating,
+} from "../../features/types";
 import axios from "axios";
 import { BACKEND_URL } from "../../utils/constants";
 import React, { useState, FC } from "react";
 
-type AddStaffDialogProps = {
+type UpdateStaffDialogProps = {
   staffs: Staff[];
-  selectedStaff: Staff | undefined;
+  selectedStaff: Staff;
   restaurant: Restaurant[];
   isOpen: boolean;
   handleClose: () => void;
   handleAgree: () => void;
 };
 
-const AddStaffDialog: FC<AddStaffDialogProps> = ({
+const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
   restaurant,
   staffs,
   selectedStaff,
@@ -31,39 +36,23 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
   handleClose,
   handleAgree,
 }) => {
-  const [identification, setIdentification] = useState(
-    selectedStaff ? selectedStaff.identification : ""
+  const [identification, setIdentification] = useState("");
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState<string>(
+    selectedStaff.gender === 1
+      ? "Male"
+      : selectedStaff.gender === 2
+      ? "Female"
+      : "NULL"
   );
-  const [name, setName] = useState(
-    selectedStaff ? selectedStaff.staff_name : ""
-  );
-  const [gender, setGender] = useState<number>(
-    selectedStaff ? selectedStaff.gender : 1
-  );
-  const [dateOfBirth, setDateOfBirth] = useState(
-    selectedStaff ? selectedStaff.date_of_birth : ""
-  );
-  const [managerID, setManagerID] = useState(
-    selectedStaff ? selectedStaff.manager_id : ""
-  );
-  const [province, setProvince] = useState(
-    selectedStaff ? selectedStaff.province : ""
-  );
-  const [district, setDistrict] = useState(
-    selectedStaff ? selectedStaff.district : ""
-  );
-  const [ward, setWard] = useState(selectedStaff ? selectedStaff.ward : "");
-  const [addressNumber, setAddressNumber] = useState(
-    selectedStaff ? selectedStaff.address_number : ""
-  );
-  const [restaurantId, setRestaurantId] = useState(
-    selectedStaff ? selectedStaff.res_id : ""
-  );
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [accountId, setAccountId] = useState(
-    selectedStaff ? selectedStaff.account_id : ""
-  );
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [managerID, setManagerID] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
+  const [addressNumber, setAddressNumber] = useState("");
+  const [restaurantId, setRestaurantId] = useState("");
+  const [accountId, setAccountId] = useState("");
 
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -72,28 +61,27 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
     return staff.manager_id === null ? [staff] : [];
   });
 
-  const handleAddNewStaff = async () => {
+  const handleUpdateStaff = async () => {
     setErrorMessages([]);
     setSuccessMessage("");
 
-    const newStaff: StaffForAdding = {
-      name: name,
-      identification,
-      gender,
-      date_of_birth: dateOfBirth,
-      manager_id: managerID ? managerID : null,
-      province,
-      district,
-      ward,
-      address_number: addressNumber,
-      email: email,
-      phone_number: phone,
-      res_id: restaurantId,
-      accID: accountId,
+    const updatedStaff: StaffForUpdating = {
+      id: selectedStaff.staff_id,
+      name: name ? name : "NULL",
+      identification: identification ? identification : "NULL",
+      gender: gender === "Male" ? 1 : gender === "Female" ? 2 : "NULL",
+      date_of_birth: dateOfBirth ? dateOfBirth : "NULL",
+      manager_id: managerID ? managerID : "NULL",
+      province: province ? province : "NULL",
+      district: district ? district : "NULL",
+      ward: ward ? ward : "NULL",
+      address_number: addressNumber ? addressNumber : "NULL",
+      res_id: restaurantId ? restaurantId : "NULL",
+      accID: accountId ? accountId : "NULL",
     };
 
-    const { data } = await axios.post(`${BACKEND_URL}/staff`, {
-      staff: newStaff,
+    const { data } = await axios.patch(`${BACKEND_URL}/staff`, {
+      staff: updatedStaff,
     });
 
     if (data.success) {
@@ -111,11 +99,11 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Insert staff"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{`Update staff ${selectedStaff.staff_id} with ID: ${selectedStaff.staff_id}`}</DialogTitle>
 
       <DialogContent className="flex flex-col w-[600px]">
         <DialogContentText id="alert-dialog-description">
-          Please fill in information below
+          Leave blank for the fields that you don't want to update
         </DialogContentText>
 
         <TextField
@@ -154,8 +142,9 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
               setGender(e.target.value);
             }}
           >
-            <MenuItem value={1}>Male</MenuItem>
-            <MenuItem value={2}>Female</MenuItem>
+            <MenuItem value={"Male"}>Male</MenuItem>
+            <MenuItem value={"Female"}>Female</MenuItem>
+            <MenuItem value={"NULL"}>NULL, no update</MenuItem>
           </Select>
         </FormControl>
 
@@ -271,32 +260,6 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
 
         <TextField
           autoFocus
-          value={email}
-          margin="dense"
-          label="Email"
-          type="text"
-          fullWidth
-          variant="standard"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-
-        <TextField
-          autoFocus
-          margin="dense"
-          value={phone}
-          label="Phone number"
-          type="text"
-          fullWidth
-          variant="standard"
-          onChange={(e) => {
-            setPhone(e.target.value);
-          }}
-        />
-
-        <TextField
-          autoFocus
           margin="dense"
           value={accountId}
           label="AccountID"
@@ -331,11 +294,11 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
         <Button onClick={handleClose}>Close</Button>
 
         <div className="flex items-center gap-2">
-          <Button onClick={handleAddNewStaff}>Insert staff</Button>
+          <Button onClick={handleUpdateStaff}>Update staff</Button>
         </div>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default AddStaffDialog;
+export default UpdateStaffDialog;

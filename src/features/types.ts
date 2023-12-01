@@ -1,12 +1,13 @@
 export type Restaurant = {
   res_id: string;
-  name: string;
-  table_count: number;
-  hotline: string;
+  res_name: string;
+  hotline: number;
   province: string;
   district: string;
   ward: string;
-  number: string;
+  address_number: string;
+  table_count: number;
+  total_slot: number;
 };
 
 export type Dish = {
@@ -24,18 +25,49 @@ export type Discount = {
 };
 
 export type Staff = {
+  account_id: string;
   staff_id: string;
   identification: string;
-  name: string;
-  gender: string;
-  dob: string;
-  role: string;
-  manager_id: string;
+  staff_name: string;
+  gender: number;
+  date_of_birth: string;
+  manager_id: string | null;
   province: string;
   district: string;
   ward: string;
-  number: string;
+  address_number: string;
   res_id: string;
+};
+
+export type StaffForAdding = {
+  identification: string;
+  name: string;
+  gender: number;
+  date_of_birth: string;
+  manager_id: string | null;
+  province: string;
+  district: string;
+  ward: string;
+  address_number: string;
+  res_id: string;
+  email: string;
+  phone_number: string;
+  accID: string;
+};
+
+export type StaffForUpdating = {
+  id: string;
+  identification: string | null;
+  name: string | null;
+  gender: number | null | string;
+  date_of_birth: string | null;
+  manager_id: string | null;
+  province: string | null;
+  district: string | null;
+  ward: string | null;
+  address_number: string | null;
+  res_id: string | null;
+  accID: string | null;
 };
 
 export type Banner = {};
