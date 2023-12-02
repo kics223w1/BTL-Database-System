@@ -184,7 +184,8 @@ const StaffManagement = () => {
 
   return (
     <div className="flex flex-col w-full h-full overflow-auto justify-center py-14 px-32 gap-10">
-      <div className="w-full h-[600px] overflow-auto">
+      <div className="flex flex-col gap-5 w-full h-[600px] overflow-auto">
+        <span className="text-lg font-bold">Staff table</span>
         <DataGrid
           rows={rows}
           columns={columns}
