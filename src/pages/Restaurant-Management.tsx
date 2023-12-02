@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Restaurant } from "../features/types";
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
-import RestaurantList from "../components/RestaurantList";
-import RestaurantCard from "../components/RestaurantCard";
-import ShimmerCard from "../components/ShimmerCard";
 // @ts-ignore
 import macDonald from "../../assets/mcDonald.png";
 // @ts-ignore
@@ -23,6 +20,7 @@ import kichi from "../../assets/kichi.png";
 import vietkitchen from "../../assets/vietkitchen.png";
 import ConfirmDeleteTable from "../components/dialogs/confirm-delete-table";
 import AddTableDialog from "../components/dialogs/add-table-dialog";
+import RestaurantManagementBottom from "../components/Restaurant-management-bottom";
 
 const getRestaurantImage = () => {
   const arr = [
@@ -41,7 +39,6 @@ const getRestaurantImage = () => {
 
 const RestaurantManagement = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [deletedRestaurant, setDeletedRestaurant] = useState<
     Restaurant | undefined
   >(undefined);
@@ -51,13 +48,9 @@ const RestaurantManagement = () => {
 
   useEffect(() => {
     const setup = async () => {
-      setIsLoading(true);
-
       const [responseRes] = await Promise.all([
         axios.get(`${BACKEND_URL}/restaurant`),
       ]);
-
-      setIsLoading(false);
 
       const objRes: { data: Restaurant[]; success: boolean } | undefined =
         responseRes.data;
@@ -67,8 +60,6 @@ const RestaurantManagement = () => {
     };
     setup();
   }, []);
-
-  const handleInsertTable = async () => {};
 
   return (
     <div className="w-full h-[90vh] px-36 py-14 mb-10 overflow-auto">
@@ -137,6 +128,11 @@ const RestaurantManagement = () => {
           );
         })}
       </div>
+
+      <div className="w-full h-[50vh] border-t border-gray-200 my-10 py-5">
+        <RestaurantManagementBottom restaurants={restaurants} />
+      </div>
+
       {deletedRestaurant && (
         <ConfirmDeleteTable
           isOpen={deletedRestaurant !== undefined}
