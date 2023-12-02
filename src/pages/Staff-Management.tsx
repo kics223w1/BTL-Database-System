@@ -7,6 +7,7 @@ import ConfirmDialog from "../components/dialogs/confirm-dialog";
 import AddStaffDialog from "../components/dialogs/add-staff-dialog";
 import UpdateStaffDialog from "../components/dialogs/update-staff-dialog";
 import toast from "react-hot-toast";
+import { TextField } from "@mui/material";
 
 const columns: GridColDef[] = [
   { field: "staff_id", headerName: "staff_id", width: 200 },
@@ -182,8 +183,8 @@ const StaffManagement = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[90vh] justify-center py-14 px-32 gap-10">
-      <div className="w-full h-full overflow-auto">
+    <div className="flex flex-col w-full h-full overflow-auto justify-center py-14 px-32 gap-10">
+      <div className="w-full h-[600px] overflow-auto">
         <DataGrid
           rows={rows}
           columns={columns}
@@ -210,7 +211,7 @@ const StaffManagement = () => {
       </div>
       <div className="flex items-center justify-center w-full gap-5">
         <button
-          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
           onClick={() => {
             setIsAddStaffDialogVisible(true);
           }}
@@ -218,7 +219,7 @@ const StaffManagement = () => {
           Insert new staff
         </button>
         <button
-          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
           onClick={() => {
             setIsUpdateStaffDialogVisible(true);
           }}
@@ -227,7 +228,7 @@ const StaffManagement = () => {
         </button>
 
         <button
-          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
           onClick={() => {
             setIsConfirmDialogVisible(true);
           }}
@@ -236,12 +237,13 @@ const StaffManagement = () => {
         </button>
 
         <button
-          className="bg-orange-600 hover:bg-orange-400 p-2 w-[250px] rounded"
+          className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
           onClick={handleGetStaffs}
         >
           {isLoadingGetStaffs ? "Loading..." : "Get staffs"}
         </button>
       </div>
+      <Bottom />
       {selectedStaff && (
         <ConfirmDialog
           isOpen={isConfirmDialogVisible}
@@ -286,6 +288,88 @@ const StaffManagement = () => {
           }}
         />
       )}
+    </div>
+  );
+};
+
+const Bottom = () => {
+  const [rows, setRows] = useState<any[]>([]);
+  const [fromAge, setFromAge] = useState(18);
+  const [toAge, setToAge] = useState(25);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFindStaffs = async () => {
+    setIsLoading(true);
+
+    const response = await axios.get(`${BACKEND_URL}/staff_age`, {
+      params: {
+        agemin: fromAge,
+        agemax: toAge,
+      },
+    });
+
+    setIsLoading(false);
+
+    const obj: { data: Staff[]; success: boolean } | undefined = response.data;
+    if (!obj) {
+      setRows([]);
+      toast.error("Something went wrong!");
+      return;
+    }
+
+    if (obj.success) {
+      const newRows = convertStaffsToRows(obj.data);
+      setRows(newRows);
+      return;
+    }
+
+    setRows([]);
+    toast.error(`${obj.data}`);
+  };
+
+  return (
+    <div className="flex flex-col gap-5 w-full h-[600px] mt-10 border-t border-gray-200 py-10">
+      <span className="text-lg font-bold">PROCEDURE staff_age_in_range</span>
+      <div className="flex items-baseline gap-5">
+        <TextField
+          label="From age"
+          value={fromAge}
+          type="number"
+          fullWidth
+          variant="standard"
+          onChange={(e) => {
+            setFromAge(Number(e.target.value));
+          }}
+        />
+
+        <TextField
+          label="To age"
+          value={toAge}
+          type="number"
+          fullWidth
+          variant="standard"
+          onChange={(e) => {
+            setToAge(Number(e.target.value));
+          }}
+        />
+
+        <button
+          className={`bg-orange-400 py-2 rounded w-[440px] px-4 hover:bg-orange-400/90`}
+          onClick={handleFindStaffs}
+        >
+          {isLoading ? "Loading..." : "Find staffs"}
+        </button>
+      </div>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 20 },
+          },
+        }}
+        pageSizeOptions={[5, 10, 20, 50, 100]}
+      />
     </div>
   );
 };

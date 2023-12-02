@@ -47,6 +47,15 @@ const Header = () => {
           </li>
           <li>
             <Link
+              to="/customer"
+              className="p-2 relative hover:bg-gray-50 rounded-md flex items-center gap-2"
+            >
+              <UserCircleIcon className="w-4 h-4 text-gray-700" />
+              <p className="hidden md:block">Customer</p>
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/staff"
               className="p-2 relative md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
             >
@@ -61,15 +70,6 @@ const Header = () => {
             >
               <HomeIcon className="w-4 h-4 text-gray-700" />
               <p className="hidden md:block">Restaurant</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/customer"
-              className="p-2 relative hover:bg-gray-50 rounded-md flex items-center gap-2"
-            >
-              <UserCircleIcon className="w-4 h-4 text-gray-700" />
-              <p className="hidden md:block">Customer</p>
             </Link>
           </li>
         </ul>
