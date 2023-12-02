@@ -15,6 +15,7 @@ import store from "./store/store";
 import "./styles.css";
 import StaffManagement from "./pages/Staff-Management";
 import RestaurantManagement from "./pages/Restaurant-Management";
+import CustomerManagement from "./pages/Customer-Management";
 
 const Contact = lazy(() => import("./pages/Contact"));
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "restaurant",
         element: <RestaurantManagement />,
+      },
+      {
+        path: "customer",
+        element: <CustomerManagement />,
       },
     ],
     errorElement: <Error />,

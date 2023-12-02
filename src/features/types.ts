@@ -92,4 +92,12 @@ export type ReservedTable = {
   table_id: string;
 };
 
-export type Banner = {};
+export type Customer = {
+  cus_id: string;
+  cus_name: string;
+  phone_num: string;
+  account_id: string;
+  loyalty_point: number;
+};
+
+export type CustomerPay = Customer & { Total: number };
