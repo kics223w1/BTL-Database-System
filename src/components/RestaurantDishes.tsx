@@ -3,16 +3,13 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 import React, { FC } from "react";
 import { Dish } from "../features/types";
-import { TextField } from "@mui/material";
+import RestaurantDishesTop from "./RestaurantDishes-Top";
 
 type RestaurantDishesProps = {
   dishes: Dish[];
 };
 
 const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
-  const [account, setAccount] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
-
   const dispatch = useDispatch();
 
   const handleAddToCart = (item) => {
@@ -22,31 +19,7 @@ const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
 
   return (
     <div className="flex flex-col w-full h-full overflow-auto gap-5">
-      <div className="flex gap-5 items-baseline">
-        <TextField
-          value={account}
-          autoFocus
-          margin="dense"
-          label={"Account"}
-          fullWidth
-          variant="standard"
-          onChange={(e) => {
-            setAccount(e.target.value.trim());
-          }}
-        />
-
-        <TextField
-          value={password}
-          autoFocus
-          margin="dense"
-          label={"Password"}
-          fullWidth
-          variant="standard"
-          onChange={(e) => {
-            setPassword(e.target.value.trim());
-          }}
-        />
-      </div>
+      <RestaurantDishesTop />
       <ul className="p-4">
         {dishes.map((dish, index) => {
           return (
