@@ -101,3 +101,8 @@ export type Customer = {
 };
 
 export type CustomerPay = Customer & { Total: number };
+
+export type Account = {
+  account_id: string;
+  account_password: string;
+};

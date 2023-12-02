@@ -16,6 +16,7 @@ import "./styles.css";
 import StaffManagement from "./pages/Staff-Management";
 import RestaurantManagement from "./pages/Restaurant-Management";
 import CustomerManagement from "./pages/Customer-Management";
+import AccountManagement from "./pages/Account-Management";
 
 const Contact = lazy(() => import("./pages/Contact"));
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "customer",
         element: <CustomerManagement />,
+      },
+      {
+        path: "account",
+        element: <AccountManagement />,
       },
     ],
     errorElement: <Error />,
