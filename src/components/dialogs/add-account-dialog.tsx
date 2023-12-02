@@ -84,10 +84,7 @@ const AddAccountDialog: React.FC<AddTableDialogProps> = ({
           value={accountID}
           autoFocus
           margin="dense"
-          label={`Current IDs: ${accounts.map(
-            (account, index) =>
-              `${account.account_id}${index < accounts.length - 1 ? ", " : ""}`
-          )}`}
+          label={"Account ID"}
           fullWidth
           variant="standard"
           onChange={(e) => {
@@ -106,6 +103,12 @@ const AddAccountDialog: React.FC<AddTableDialogProps> = ({
             setAccountPassword(e.target.value.trim());
           }}
         />
+        <button
+          className={`bg-orange-400 py-2 rounded w-[440px] px-4 hover:bg-orange-400/90`}
+          onClick={() => {}}
+        >
+          Login
+        </button>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Close</Button>

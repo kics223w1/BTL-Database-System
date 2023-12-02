@@ -23,16 +23,7 @@ import AddTableDialog from "../components/dialogs/add-table-dialog";
 import RestaurantManagementBottom from "../components/Restaurant-management-bottom";
 
 const getRestaurantImage = () => {
-  const arr = [
-    macDonald,
-    doki,
-    burgerking,
-    dominoPizza,
-    hana,
-    kfc,
-    kichi,
-    vietkitchen,
-  ];
+  const arr = [doki, burgerking, dominoPizza, hana, kfc, kichi, vietkitchen];
   const index = Math.floor(Math.random() * arr.length);
   return index >= 0 && index < arr.length ? arr[index] : arr[0];
 };

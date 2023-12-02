@@ -5,6 +5,7 @@ import { BACKEND_URL } from "../utils/constants";
 import { Customer, CustomerPay } from "../features/types";
 import toast from "react-hot-toast";
 import { TextField } from "@mui/material";
+import AddCustomerDialog from "../components/dialogs/add-customer-dialog";
 
 const columns: GridColDef[] = [
   { field: "cus_id", headerName: "cus_id", width: 200 },
@@ -72,30 +73,32 @@ const CustomerManagement = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<
     Customer | undefined
   >(undefined);
+  const [isAddCustomerDialogOpen, setIsAddCustomerDialogOpen] =
+    React.useState<boolean>(false);
 
   const apiRef = useGridApiRef();
 
   useEffect(() => {
-    const setup = async () => {
-      const responseCustomer = await axios.get(`${BACKEND_URL}/customer`);
-
-      const obj: { data: Customer[]; success: boolean } | undefined =
-        responseCustomer.data;
-
-      if (obj && obj.success) {
-        const newRows = convertToRows(obj.data);
-        setCustomers(obj.data);
-        setRows(newRows);
-        return;
-      }
-
-      setCustomers([]);
-      setRows([]);
-      setSelectedCustomer(undefined);
-    };
-
-    setup();
+    handleGetCustomers();
   }, []);
+
+  const handleGetCustomers = async () => {
+    const responseCustomer = await axios.get(`${BACKEND_URL}/customer`);
+
+    const obj: { data: Customer[]; success: boolean } | undefined =
+      responseCustomer.data;
+
+    if (obj && obj.success) {
+      const newRows = convertToRows(obj.data);
+      setCustomers(obj.data);
+      setRows(newRows);
+      return;
+    }
+
+    setCustomers([]);
+    setRows([]);
+    setSelectedCustomer(undefined);
+  };
 
   return (
     <div className="flex flex-col w-full h-full overflow-auto justify-center py-14 px-32 gap-10">
@@ -125,9 +128,34 @@ const CustomerManagement = () => {
           }}
           checkboxSelection
         />
+        <div className="flex items-center justify-center w-full mt-5 gap-5">
+          <button
+            className={`bg-orange-400 py-2 rounded px-4 hover:bg-orange-400/90`}
+            onClick={() => {
+              setIsAddCustomerDialogOpen(true);
+            }}
+          >
+            Create new customer
+          </button>
+          <button
+            className={`bg-orange-400 py-2 rounded px-4 hover:bg-orange-400/90`}
+            onClick={handleGetCustomers}
+          >
+            Get customers
+          </button>
+        </div>
       </div>
 
       <CustomerManagementBottom />
+
+      {isAddCustomerDialogOpen && (
+        <AddCustomerDialog
+          isOpen={isAddCustomerDialogOpen}
+          handleClose={() => {
+            setIsAddCustomerDialogOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 };
