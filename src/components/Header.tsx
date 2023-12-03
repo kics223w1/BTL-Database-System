@@ -31,7 +31,6 @@ const Header = () => {
               <p className="hidden md:block">Home</p>
             </Link>
           </li>
-
           <li>
             <Link
               to="/customer"
