@@ -1,16 +1,10 @@
-import React, { FC } from "react";
-import { Customer, Dish } from "../features/types";
-import RestaurantDishesTop from "./RestaurantDishes-Top";
-import Dishes from "./Dishes";
-import CustomerBill from "./Customer-bill";
-import BillDishes from "./Bill-dishes";
-import AddBillDialog from "./dialogs/add-bill-dialog";
+import React, { useEffect } from "react";
+import RestaurantDishesTop from "../components/RestaurantDishes-Top";
+import { Customer } from "../features/types";
+import AddBillDialog from "../components/dialogs/add-bill-dialog";
+import BillDishes from "../components/Bill-dishes";
 
-type RestaurantDishesProps = {
-  dishes: Dish[];
-};
-
-const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
+const Cart = () => {
   const [currentCustomer, setCurrentCustomer] = React.useState<
     Customer | undefined
   >(undefined);
@@ -19,7 +13,7 @@ const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
   const [currentBillID, setCurrentBillID] = React.useState<string>("");
 
   return (
-    <div className="flex flex-col w-full h-full px-36 py-14 mb-10 overflow-auto">
+    <div className="flex flex-col w-full h-[90vh] px-36 py-14 mb-10 overflow-auto">
       <RestaurantDishesTop
         currentCustomer={currentCustomer}
         setCurrentCustomer={setCurrentCustomer}
@@ -28,12 +22,7 @@ const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
           setAddBillDialogVisible(true);
         }}
       />
-      {currentBillID ? (
-        <BillDishes billID={currentBillID} />
-      ) : (
-        <Dishes dishes={dishes} />
-      )}
-
+      {currentBillID && <BillDishes billID={currentBillID} />}
       {addBillDialogVisible && currentCustomer && (
         <AddBillDialog
           isOpen={addBillDialogVisible && currentCustomer ? true : false}
@@ -48,4 +37,4 @@ const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
   );
 };
 
-export default RestaurantDishes;
+export default Cart;

@@ -9,21 +9,8 @@ import React from "react";
 import RestaurantDishes from "../components/RestaurantDishes";
 
 const Restaurant = () => {
-  const { id } = useParams();
   const { dishes, isLoading } = useRestaurantsMenu();
 
-  return (
-    <div className="container-md my-8">
-      {isLoading ? (
-        <ShimmerRestaurant />
-      ) : (
-        <>
-          {/* <RestaurantInfo restaurant={restaurant} /> */}
-          {/* <RestaurantOrder /> */}
-          <RestaurantDishes dishes={dishes} />
-        </>
-      )}
-    </div>
-  );
+  return <RestaurantDishes dishes={dishes} />;
 };
 export default Restaurant;

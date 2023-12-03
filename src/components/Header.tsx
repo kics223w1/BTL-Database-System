@@ -33,25 +33,20 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to="/cart"
-              className="p-2 relative md:px-4 hover:bg-gray-50 rounded-md flex items-center gap-2"
-            >
-              <ShoppingBagIcon className="w-4 h-4 text-gray-700" />{" "}
-              <p className="hidden md:block">Cart</p>
-              {
-                <p className="absolute -top-1 -right-1 bg-orange-500 text-white flex justify-center items-center w-5 h-5 text-xs rounded-full">
-                  {items.length}
-                </p>
-              }
-            </Link>
-          </li>
-          <li>
-            <Link
               to="/customer"
               className="p-2 relative hover:bg-gray-50 rounded-md flex items-center gap-2"
             >
               <UserCircleIcon className="w-4 h-4 text-gray-700" />
               <p className="hidden md:block">Customer</p>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/account"
+              className="p-2 relative hover:bg-gray-50 rounded-md flex items-center gap-2"
+            >
+              <UserCircleIcon className="w-4 h-4 text-gray-700" />
+              <p className="hidden md:block">Account</p>
             </Link>
           </li>
           <li>

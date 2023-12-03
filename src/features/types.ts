@@ -101,3 +101,34 @@ export type Customer = {
 };
 
 export type CustomerPay = Customer & { Total: number };
+
+export type Account = {
+  account_id: string;
+  account_password: string;
+};
+
+export type Bill = {
+  bill_id: string;
+  bill_datetime: string;
+  pay_status: boolean;
+  table_id: string;
+  res_id: string;
+  cus_id: string;
+  total_cost: number;
+};
+
+export type DishInBill = {
+  bill_id: string;
+  dish_id: string;
+  dish_count: number;
+  current_price: number;
+  dish_name: string;
+};
+
+export type BillToCreate = {
+  bill_id: string;
+  bill_datetime: string;
+  table_id: string;
+  res_id: string;
+  cus_id: string;
+};
