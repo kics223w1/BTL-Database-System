@@ -135,7 +135,7 @@ const CustomerManagement = () => {
               setIsAddCustomerDialogOpen(true);
             }}
           >
-            Create new customer
+            Create customer
           </button>
           <button
             className={`bg-orange-400 py-2 rounded px-4 hover:bg-orange-400/90`}

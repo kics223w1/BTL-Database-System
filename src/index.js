@@ -38,10 +38,6 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "cart",
-        element: <Cart />,
-      },
-      {
         path: "contact",
         element: (
           <Suspense fallback={<h1>Loading...</h1>}>

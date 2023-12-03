@@ -110,7 +110,7 @@ export type Account = {
 export type Bill = {
   bill_id: string;
   bill_datetime: string;
-  pay_status: number;
+  pay_status: boolean;
   table_id: string;
   res_id: string;
   cus_id: string;
@@ -123,4 +123,12 @@ export type DishInBill = {
   dish_count: number;
   current_price: number;
   dish_name: string;
+};
+
+export type BillToCreate = {
+  bill_id: string;
+  bill_datetime: string;
+  table_id: string;
+  res_id: string;
+  cus_id: string;
 };

@@ -42,6 +42,7 @@ const CustomerDishes: FC<Props> = ({ selectedBill }) => {
       setDishes([]);
       setRows([]);
       setSelectedDish(undefined);
+      apiRef.current?.setRowSelectionModel([]);
       return;
     }
 
@@ -57,7 +58,7 @@ const CustomerDishes: FC<Props> = ({ selectedBill }) => {
     apiRef.current?.setRowSelectionModel([]);
 
     const response = await axios.get(
-      `${BACKEND_URL}/dish_included?bill_id=${selectedBill?.bill_id}`
+      `${BACKEND_URL}/dish_included?bill_id=${selectedBill.bill_id}`
     );
     const obj: { data: DishInBill[]; success: boolean } | undefined =
       await response.data;

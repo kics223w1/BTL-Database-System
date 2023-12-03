@@ -1,37 +1,40 @@
-import { useSelector } from "react-redux";
-import {
-  selectItemsInCart,
-  selectTotalPrice,
-} from "../features/cart/cartSlice";
-import { selectBooking } from "../features/cart/bookingSlice";
-import React, { useEffect, useState } from "react";
-import { Discount } from "../features/types";
+import React, { FC, useEffect, useState } from "react";
+import { Bill, Promotion } from "../features/types";
+import axios from "axios";
+import { BACKEND_URL } from "../utils/constants";
+import toast from "react-hot-toast";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-const OrderSummary = () => {
-  const [usedDiscounts, setUsedDiscounts] = useState<Discount[]>([]);
-  const [discounts, setDiscounts] = useState<Discount[]>([]);
+type Props = {
+  bill: Bill;
+};
 
-  useEffect(() => {
-    const discount1: Discount = {
-      discount_id: "A242A",
-      name: "Summer discount 10% off",
-      value: 0.1,
-    };
-    const discount2: Discount = {
-      discount_id: "1242A",
-      name: "Summer discount 20% off",
-      value: 0.2,
-    };
-    setDiscounts([discount1, discount2]);
-  }, []);
+const OrderSummary: FC<Props> = ({ bill }) => {
+  const [isPaid, setIsPaid] = useState<boolean>(false);
 
-  const totalPrice = useSelector(selectTotalPrice);
-  const booking = useSelector(selectBooking);
-  const discount =
-    usedDiscounts.reduce((val, cur) => {
-      return val + cur.value;
-    }, 0) * totalPrice;
-  const totalAmt = totalPrice - discount;
+  const handlePlaceOrder = async () => {
+    if (bill.pay_status) {
+      return;
+    }
+
+    const response = await axios.patch(
+      `${BACKEND_URL}/bill?bill_id=${bill.bill_id}`
+    );
+    const obj: { data: string; success: boolean } | undefined =
+      await response.data;
+    if (obj && obj.success) {
+      toast.success("Place order successfully");
+      setIsPaid(true);
+      return;
+    }
+
+    setIsPaid(false);
+    if (!obj) {
+      toast.error("Place order failed");
+    } else {
+      toast.error(`${obj.data}`);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 basis-5/12">
@@ -41,81 +44,61 @@ const OrderSummary = () => {
         {/* order details */}
         <div className="py-4 text-lg space-y-4 border-b">
           <div className="flex justify-between items-center font-semibold">
-            <p className="font-normal">Dishes price:</p>
-            <p>{totalPrice} VND</p>
+            <span className="font-medium">ID:</span>
+            <span className="font-medium">{bill.bill_id}</span>
           </div>
-          {booking && (
-            <div className="flex justify-between items-center font-semibold">
-              <p className="font-normal">
-                Booked {booking.booking.tables}{" "}
-                {booking.booking.tables > 1 ? "tables" : "table"} on{" "}
-                {booking.booking.date}:
-              </p>
-              <p>0 VND</p>
-            </div>
-          )}
-          {usedDiscounts.map((discount, index) => {
-            return (
-              <div
-                className="flex justify-between items-center font-semibold"
-                key={`${index}_usedValue`}
-              >
-                <p className="font-normal">
-                  Discount ({discount.value * 100}%)
-                </p>
-                <p> - {discount.value * totalPrice} VND</p>
-              </div>
-            );
-          })}
+        </div>
 
-          {usedDiscounts.length > 0 && (
-            <p className="text-sm my-2">
-              You'll save {discount.toFixed(0)} VND on this order 🎉
-            </p>
-          )}
+        <div className="py-4 text-lg space-y-4 border-b">
+          <div className="flex justify-between items-center font-semibold">
+            <span className="font-medium">Date time:</span>
+            <span className="font-medium">{bill.bill_datetime}</span>
+          </div>
+        </div>
+
+        <div className="py-4 text-lg space-y-4 border-b">
+          <div className="flex justify-between items-center font-semibold">
+            <span className="font-medium">Restaurant ID:</span>
+            <span className="font-medium">{bill.res_id}</span>
+          </div>
+        </div>
+
+        <div className="py-4 text-lg space-y-4 border-b">
+          <div className="flex justify-between items-center font-semibold">
+            <span className="font-medium">Table ID:</span>
+            <span className="font-medium">{bill.table_id}</span>
+          </div>
+        </div>
+        <div className="py-4 text-lg space-y-4 border-b">
+          <div className="flex justify-between items-center font-semibold">
+            <span className="font-medium">Customer ID:</span>
+            <span className="font-medium">{bill.cus_id}</span>
+          </div>
         </div>
 
         <div className="py-4 border-b">
           <div className="md:flex justify-between items-center font-bold text-lg md:text-2xl gap-2">
-            <h1>Total Amount</h1>
-            <h1 className="text-orange-500">{totalAmt} VND</h1>
+            <h1>Total Cost:</h1>
+            <h1 className="text-orange-500">{bill.total_cost} VND</h1>
           </div>
         </div>
 
-        <button className="w-full block mt-4 uppercase font-bold text-lg bg-orange-600 text-white text-center p-4 rounded-md">
-          Place order
-        </button>
-      </div>
-
-      {discounts.map((discount) => {
-        const isUsed = usedDiscounts.some(
-          (dis) => dis.discount_id === discount.discount_id
-        );
-        return (
+        {isPaid ? (
           <div
-            className="flex items-center justify-center gap-4 rounded-md border shadow-md p-4"
-            key={discount.discount_id}
+            className={`w-full block mt-4 uppercase font-bold text-lg bg-orange-600 text-white text-center p-4 rounded-md`}
           >
-            <span className="text-base font-medium"> 🎉 {discount.name}</span>
-            <button
-              className="bg-orange-600 rounded px-4 py-1 hover:bg-orange-400"
-              onClick={() => {
-                if (isUsed) {
-                  setUsedDiscounts(
-                    usedDiscounts.filter(
-                      (dis) => dis.discount_id !== discount.discount_id
-                    )
-                  );
-                } else {
-                  setUsedDiscounts([...usedDiscounts, discount]);
-                }
-              }}
-            >
-              {isUsed ? "Remove this" : "Use this"}
-            </button>
+            Paid, thank you!
           </div>
-        );
-      })}
+        ) : (
+          <button
+            onClick={handlePlaceOrder}
+            className={`w-full block mt-4 uppercase font-bold text-lg bg-orange-600 hover:bg-orange-400
+           text-white text-center p-4 rounded-md`}
+          >
+            Place order
+          </button>
+        )}
+      </div>
     </div>
   );
 };

@@ -103,12 +103,6 @@ const AddAccountDialog: React.FC<AddTableDialogProps> = ({
             setAccountPassword(e.target.value.trim());
           }}
         />
-        <button
-          className={`bg-orange-400 py-2 rounded w-[440px] px-4 hover:bg-orange-400/90`}
-          onClick={() => {}}
-        >
-          Login
-        </button>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Close</Button>

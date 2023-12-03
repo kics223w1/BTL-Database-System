@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Restaurant } from "../features/types";
+import { Promotion, Restaurant } from "../features/types";
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
-// @ts-ignore
-import macDonald from "../../assets/mcDonald.png";
 // @ts-ignore
 import doki from "../../assets/doki.png";
 // @ts-ignore
@@ -115,6 +113,19 @@ const RestaurantManagement = () => {
                   Delete 1 table
                 </button>
               </div>
+              <button
+                className={`bg-orange-400 py-2 rounded w-full mt-2 ${
+                  restaurant.table_count <= 0
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-orange-400/90"
+                }`}
+                disabled={restaurant.table_count <= 0}
+                onClick={() => {
+                  setDeletedRestaurant(restaurant);
+                }}
+              >
+                Book table
+              </button>
             </div>
           );
         })}

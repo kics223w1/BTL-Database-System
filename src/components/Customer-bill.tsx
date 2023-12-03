@@ -5,6 +5,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
 import toast from "react-hot-toast";
 import CustomerDishes from "./Customer-dishes";
+import CustomerPromotions from "./Customer-promotions";
 
 const billColumns: GridColDef[] = [
   { field: "bill_id", headerName: "bill_id", width: 200 },
@@ -117,6 +118,14 @@ const CustomerBill: FC<Props> = ({ currentCustomer }) => {
             : "Please select a bill to see it dishes"}
         </span>
         <CustomerDishes selectedBill={selectedBill} />
+      </div>
+      <div className="flex flex-col gap-5 w-full h-[600px] mt-5">
+        <span className="font-bold text-lg">
+          {selectedBill
+            ? `Promotions in bill ${selectedBill.bill_id}`
+            : "Please select a bill to see it promotions"}
+        </span>
+        <CustomerPromotions selectedBill={selectedBill} />
       </div>
     </div>
   );

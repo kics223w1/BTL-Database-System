@@ -10,11 +10,15 @@ type Props = {
     React.SetStateAction<Customer | undefined>
   >;
   currentCustomer: Customer | undefined;
+  isPageBill?: boolean;
+  handleOnClickCreateBill?: () => void;
 };
 
 const RestaurantDishesTop: FC<Props> = ({
   setCurrentCustomer,
   currentCustomer,
+  isPageBill,
+  handleOnClickCreateBill,
 }) => {
   const [account, setAccount] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
@@ -67,7 +71,9 @@ const RestaurantDishesTop: FC<Props> = ({
 
   return (
     <div className="flex flex-col border-b border-gray-200 pb-5">
-      <span className="font-bold text-lg">Login to order</span>
+      {!currentCustomer && (
+        <span className="font-bold text-lg">Please login</span>
+      )}
       {currentCustomer ? (
         <div className="flex gap-5 items-baseline">
           <span className="text-lg font-medium">
@@ -76,14 +82,27 @@ const RestaurantDishesTop: FC<Props> = ({
           <span className="text-lg font-medium">
             You have {currentCustomer.loyalty_point} loyalty points.
           </span>
-          <button
-            className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
-            onClick={() => {
-              setCurrentCustomer(undefined);
-            }}
-          >
-            Logout
-          </button>
+          {isPageBill ? (
+            <button
+              className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
+              onClick={() => {
+                if (handleOnClickCreateBill) {
+                  handleOnClickCreateBill();
+                }
+              }}
+            >
+              Create bill to order food
+            </button>
+          ) : (
+            <button
+              className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
+              onClick={() => {
+                setCurrentCustomer(undefined);
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
       ) : (
         <div className="flex gap-5 items-baseline">
