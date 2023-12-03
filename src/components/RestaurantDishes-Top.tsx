@@ -1,16 +1,23 @@
-import React from "react";
+import React, { FC } from "react";
 import { TextField } from "@mui/material";
 import { BACKEND_URL } from "../utils/constants";
 import axios from "axios";
 import { Account, Customer } from "../features/types";
 import toast from "react-hot-toast";
 
-const RestaurantDishesTop = () => {
+type Props = {
+  setCurrentCustomer: React.Dispatch<
+    React.SetStateAction<Customer | undefined>
+  >;
+  currentCustomer: Customer | undefined;
+};
+
+const RestaurantDishesTop: FC<Props> = ({
+  setCurrentCustomer,
+  currentCustomer,
+}) => {
   const [account, setAccount] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const [currentCustomer, setCurrentCustomer] = React.useState<
-    Customer | undefined
-  >(undefined);
 
   const handleLogin = async () => {
     if (!account) {

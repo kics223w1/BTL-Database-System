@@ -13,16 +13,8 @@ const Restaurant = () => {
   const { dishes, isLoading } = useRestaurantsMenu();
 
   return (
-    <div className="container-md my-8">
-      {isLoading ? (
-        <ShimmerRestaurant />
-      ) : (
-        <>
-          {/* <RestaurantInfo restaurant={restaurant} /> */}
-          {/* <RestaurantOrder /> */}
-          <RestaurantDishes dishes={dishes} />
-        </>
-      )}
+    <div className="w-full h-full overflow-auto py-14 px-64 gap-10">
+      {isLoading ? <ShimmerRestaurant /> : <RestaurantDishes dishes={dishes} />}
     </div>
   );
 };
