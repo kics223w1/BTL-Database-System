@@ -63,10 +63,15 @@ const RestaurantDishesTop: FC<Props> = ({
         );
         setCurrentCustomer(customer);
         return;
+      } else if (obj) {
+        toast.error(`${obj.data}`);
+        return;
       }
     }
 
-    toast.error("Account or password is incorrect!");
+    toast.error(
+      "Please go to Customer tab to create a customer with this account before login!"
+    );
   };
 
   return (

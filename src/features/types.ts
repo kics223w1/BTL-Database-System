@@ -132,3 +132,12 @@ export type BillToCreate = {
   res_id: string;
   cus_id: string;
 };
+
+export type PayLoadReservation = {
+  reservation_id: string;
+  slot_count: number;
+  date_time: string; // E.g 2023-10-22 07:08:08.000
+  cus_id: string;
+  res_id: string;
+  table_id: string;
+};

@@ -177,7 +177,7 @@ const StaffManagement = () => {
 
     if (obj.success) {
       toast.success(
-        `${obj.data} successfully, Please hit "Get staffs" to refresh!`
+        `${obj.data} successfully, Please hit "Refresh" to refresh!`
       );
       return;
     }
@@ -244,7 +244,7 @@ const StaffManagement = () => {
           className="bg-orange-400 hover:bg-orange-400/90 p-2 w-[250px] rounded"
           onClick={handleGetStaffs}
         >
-          {isLoadingGetStaffs ? "Loading..." : "Get staffs"}
+          {isLoadingGetStaffs ? "Loading..." : "Refresh"}
         </button>
       </div>
       <Bottom />

@@ -25,7 +25,7 @@ const AddTableDialog: React.FC<AddTableDialogProps> = ({
   const [tables, setTables] = React.useState<Table[]>([]);
   const [tableId, setTableId] = React.useState<string>("");
 
-  const [slots, setSlots] = React.useState<number>(0);
+  const [slots, setSlots] = React.useState<number>(1);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -88,6 +88,7 @@ const AddTableDialog: React.FC<AddTableDialogProps> = ({
       toast.success(
         "Insert table successfully. Please refresh to see changes!"
       );
+      handleClose();
     } else {
       toast.error(`${obj.data}`);
     }
@@ -108,7 +109,7 @@ const AddTableDialog: React.FC<AddTableDialogProps> = ({
           value={tableId}
           autoFocus
           margin="dense"
-          label={`IDs: ${tables.map((table) => table.table_id)}`}
+          label={`Table IDs: ${tables.map((table) => table.table_id)}`}
           fullWidth
           variant="standard"
           onChange={(e) => {
@@ -125,7 +126,10 @@ const AddTableDialog: React.FC<AddTableDialogProps> = ({
           type="number"
           variant="standard"
           onChange={(e) => {
-            setSlots(Number(e.target.value));
+            const newNum = Number(e.target.value);
+            if (newNum >= 1) {
+              setSlots(newNum);
+            }
           }}
         />
       </DialogContent>

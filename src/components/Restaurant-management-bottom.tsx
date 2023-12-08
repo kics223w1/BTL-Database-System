@@ -129,7 +129,7 @@ const RestaurantManagementBottom: FC<RestaurantManagementBottomProps> = ({
           className={`bg-orange-400 py-2 rounded w-80 hover:bg-orange-400/90`}
           onClick={handleGetBestSeller}
         >
-          {isLoading ? "Loading..." : "Get best seller"}
+          {isLoading ? "Loading..." : "Find best seller"}
         </button>
       </div>
 
@@ -159,7 +159,7 @@ const RestaurantManagementBottom: FC<RestaurantManagementBottomProps> = ({
           className={`bg-orange-400 py-2 rounded w-80 hover:bg-orange-400/90`}
           onClick={handleGetRevenue}
         >
-          {isLoadingRevenue ? "Loading..." : "Get revenue"}
+          {isLoadingRevenue ? "Loading..." : "Show revenue"}
         </button>
       </div>
     </div>

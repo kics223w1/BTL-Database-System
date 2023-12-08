@@ -141,7 +141,7 @@ const CustomerManagement = () => {
             className={`bg-orange-400 py-2 rounded px-4 hover:bg-orange-400/90`}
             onClick={handleGetCustomers}
           >
-            Get customers
+            Refresh
           </button>
         </div>
       </div>

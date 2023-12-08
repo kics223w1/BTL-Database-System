@@ -96,7 +96,7 @@ const AccountManagement = () => {
           className={`bg-orange-400 py-2 rounded w-[440px] px-4 hover:bg-orange-400/90`}
           onClick={handleGetAccounts}
         >
-          Get accounts
+          Refresh
         </button>
       </div>
 

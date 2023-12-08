@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Promotion, Restaurant } from "../features/types";
+import { Customer, Promotion, Restaurant } from "../features/types";
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constants";
 // @ts-ignore
@@ -19,6 +19,8 @@ import vietkitchen from "../../assets/vietkitchen.png";
 import ConfirmDeleteTable from "../components/dialogs/confirm-delete-table";
 import AddTableDialog from "../components/dialogs/add-table-dialog";
 import RestaurantManagementBottom from "../components/Restaurant-management-bottom";
+import BookTableDialog from "../components/dialogs/book-table-dialog";
+import RestaurantDishesTop from "../components/RestaurantDishes-Top";
 
 const getRestaurantImage = () => {
   const arr = [doki, burgerking, dominoPizza, hana, kfc, kichi, vietkitchen];
@@ -33,6 +35,12 @@ const RestaurantManagement = () => {
   >(undefined);
   const [insertedTableRestaurant, setInsertedTableRestaurant] = useState<
     Restaurant | undefined
+  >(undefined);
+  const [bookedTableRestaurant, setBookedTableRestaurant] = useState<
+    Restaurant | undefined
+  >(undefined);
+  const [currentCustomer, setCurrentCustomer] = React.useState<
+    Customer | undefined
   >(undefined);
 
   useEffect(() => {
@@ -52,7 +60,14 @@ const RestaurantManagement = () => {
 
   return (
     <div className="w-full h-[90vh] px-36 py-14 mb-10 overflow-auto">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+      <RestaurantDishesTop
+        setCurrentCustomer={setCurrentCustomer}
+        currentCustomer={currentCustomer}
+        isPageBill={false}
+        handleOnClickCreateBill={() => {}}
+      />
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10 border-t border-gray-200 md:gap-8">
         {restaurants.map((restaurant, i) => {
           const srcImage = getRestaurantImage();
 
@@ -113,19 +128,21 @@ const RestaurantManagement = () => {
                   Delete 1 table
                 </button>
               </div>
-              <button
-                className={`bg-orange-400 py-2 rounded w-full mt-2 ${
-                  restaurant.table_count <= 0
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-orange-400/90"
-                }`}
-                disabled={restaurant.table_count <= 0}
-                onClick={() => {
-                  setDeletedRestaurant(restaurant);
-                }}
-              >
-                Book table
-              </button>
+              {currentCustomer && (
+                <button
+                  className={`bg-orange-400 py-2 rounded w-full mt-2 ${
+                    restaurant.table_count <= 0
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-orange-400/90"
+                  }`}
+                  disabled={restaurant.table_count <= 0}
+                  onClick={() => {
+                    setBookedTableRestaurant(restaurant);
+                  }}
+                >
+                  Book table
+                </button>
+              )}
             </div>
           );
         })}
@@ -134,6 +151,19 @@ const RestaurantManagement = () => {
       <div className="w-full h-[50vh] border-t border-gray-200 my-10 py-5">
         <RestaurantManagementBottom restaurants={restaurants} />
       </div>
+
+      {bookedTableRestaurant && currentCustomer && (
+        <BookTableDialog
+          customer={currentCustomer}
+          isOpen={
+            bookedTableRestaurant !== undefined && currentCustomer !== undefined
+          }
+          handleClose={() => {
+            setBookedTableRestaurant(undefined);
+          }}
+          restaurant={bookedTableRestaurant}
+        />
+      )}
 
       {deletedRestaurant && (
         <ConfirmDeleteTable

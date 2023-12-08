@@ -82,7 +82,7 @@ const CustomerBill: FC<Props> = ({ currentCustomer }) => {
   return (
     <div className="flex flex-col gap-5 h-full w-full">
       <div className="flex flex-col gap-5 w-full h-[600px]">
-        <span className="font-bold text-lg">Your previous bills</span>
+        <span className="font-bold text-lg">Your bills</span>
         <DataGrid
           rows={billRows}
           columns={billColumns}
@@ -115,7 +115,7 @@ const CustomerBill: FC<Props> = ({ currentCustomer }) => {
         <span className="font-bold text-lg">
           {selectedBill
             ? `Dishes in bill ${selectedBill.bill_id}`
-            : "Please select a bill to see it dishes"}
+            : "Please select a bill to see the dishes"}
         </span>
         <CustomerDishes selectedBill={selectedBill} />
       </div>
@@ -123,7 +123,7 @@ const CustomerBill: FC<Props> = ({ currentCustomer }) => {
         <span className="font-bold text-lg">
           {selectedBill
             ? `Promotions in bill ${selectedBill.bill_id}`
-            : "Please select a bill to see it promotions"}
+            : "Please select a bill to see the promotions"}
         </span>
         <CustomerPromotions selectedBill={selectedBill} />
       </div>

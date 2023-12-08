@@ -286,7 +286,7 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
         {successMessage && (
           <p className="text-green-500 text-sm font-medium mt-2">
             Message from server: {successMessage} <br /> Please close the dialog
-            and hit `Get Staffs` to see the latest table
+            and hit `Refresh` to see the latest table
           </p>
         )}
       </DialogContent>
