@@ -123,7 +123,8 @@ const StaffManagement = () => {
 
       const objRes: { data: Restaurant[]; success: boolean } | undefined =
         responseRes.data;
-      const newRestaurants = objRes && objRes.data ? objRes.data : [];
+      const newRestaurants =
+        objRes && objRes.data && objRes.data.length > 0 ? objRes.data : [];
 
       setStaffs(newStaffs);
       setRestaurants(newRestaurants);
