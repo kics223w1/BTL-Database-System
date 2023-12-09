@@ -69,7 +69,7 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
       id: selectedStaff.staff_id,
       name: name ? name : "NULL",
       identification: identification ? identification : "NULL",
-      gender: gender === "Male" ? 1 : gender === "Female" ? 2 : "NULL",
+      gender: gender === "Male" ? 1 : gender === "Female" ? 0 : "NULL",
       date_of_birth: dateOfBirth ? dateOfBirth : "NULL",
       manager_id: managerID ? managerID : "NULL",
       province: province ? province : "NULL",
@@ -99,7 +99,7 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{`Update staff ${selectedStaff.staff_id} with ID: ${selectedStaff.staff_id}`}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{`Update staff ${selectedStaff.staff_name} with ID: ${selectedStaff.staff_id}`}</DialogTitle>
 
       <DialogContent className="flex flex-col w-[600px]">
         <DialogContentText id="alert-dialog-description">

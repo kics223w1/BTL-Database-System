@@ -47,11 +47,17 @@ const RestaurantDishesTop: FC<Props> = ({
       return;
     }
 
-    const isValid = obj.data.some(
-      (acc) => acc.account_id === account && acc.account_password === password
+    const isAccountValid = obj.data.some((acc) => acc.account_id === account);
+    const isPasswordValid = obj.data.some(
+      (acc) => acc.account_password === password
     );
 
-    if (isValid) {
+    if (isAccountValid && !isPasswordValid) {
+      toast.error("Password is incorrect!");
+      return;
+    }
+
+    if (isAccountValid && isPasswordValid) {
       const responseCustomer = await axios.get(`${BACKEND_URL}/customer`);
 
       const obj: { data: Customer[]; success: boolean } | undefined =
@@ -64,13 +70,15 @@ const RestaurantDishesTop: FC<Props> = ({
         setCurrentCustomer(customer);
         return;
       } else if (obj) {
-        toast.error(`${obj.data}`);
+        toast.error(
+          `Make sure you create a customer with this account before login!`
+        );
         return;
       }
     }
 
     toast.error(
-      "Please go to Customer tab to create a customer with this account before login!"
+      `Make sure you create a customer with this account before login!`
     );
   };
 

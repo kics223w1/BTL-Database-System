@@ -11,7 +11,6 @@ import dominoPizza from "../../assets/dominoPizza.png";
 // @ts-ignore
 import hana from "../../assets/hana.png";
 // @ts-ignore
-import kfc from "../../assets/kfc.png";
 // @ts-ignore
 import kichi from "../../assets/kichi.png";
 // @ts-ignore
@@ -23,7 +22,7 @@ import BookTableDialog from "../components/dialogs/book-table-dialog";
 import RestaurantDishesTop from "../components/RestaurantDishes-Top";
 
 const getRestaurantImage = () => {
-  const arr = [doki, burgerking, dominoPizza, hana, kfc, kichi, vietkitchen];
+  const arr = [doki, burgerking, dominoPizza, hana, kichi, vietkitchen];
   const index = Math.floor(Math.random() * arr.length);
   return index >= 0 && index < arr.length ? arr[index] : arr[0];
 };

@@ -65,7 +65,7 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
     selectedStaff ? selectedStaff.account_id : ""
   );
 
-  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [errorMessages, setErrorMessages] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
 
   const managers = staffs.flatMap((staff: Staff) => {
@@ -73,23 +73,23 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
   });
 
   const handleAddNewStaff = async () => {
-    setErrorMessages([]);
+    setErrorMessages("");
     setSuccessMessage("");
 
     const newStaff: StaffForAdding = {
-      name: name,
-      identification,
+      name: name ? name : "NULL",
+      identification: identification ? identification : "NULL",
       gender,
-      date_of_birth: dateOfBirth,
-      manager_id: managerID ? managerID : null,
-      province,
-      district,
-      ward,
-      address_number: addressNumber,
-      email: email,
-      phone_number: phone,
-      res_id: restaurantId,
-      accID: accountId,
+      date_of_birth: dateOfBirth ? dateOfBirth : "NULL",
+      manager_id: managerID ? managerID : "NULL",
+      province: province ? province : "NULL",
+      district: district ? district : "NULL",
+      ward: ward ? ward : "NULL",
+      address_number: addressNumber ? addressNumber : "NULL",
+      email: email ? email : "NULL",
+      phone_number: phone ? phone : "NULL",
+      res_id: restaurantId ? restaurantId : "NULL",
+      accID: accountId ? accountId : "NULL",
     };
 
     const { data } = await axios.post(`${BACKEND_URL}/staff`, {
@@ -97,11 +97,13 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
     });
 
     if (data.success) {
-      setSuccessMessage(data.data);
+      setSuccessMessage(`${data.data}`);
       return;
     }
 
-    setErrorMessages([data.data]);
+    console.log(data);
+
+    setErrorMessages(`${data.data}`);
   };
 
   return (
@@ -155,7 +157,7 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
             }}
           >
             <MenuItem value={1}>Male</MenuItem>
-            <MenuItem value={2}>Female</MenuItem>
+            <MenuItem value={0}>Female</MenuItem>
           </Select>
         </FormControl>
 
@@ -308,22 +310,13 @@ const AddStaffDialog: FC<AddStaffDialogProps> = ({
           }}
         />
 
-        {errorMessages.length > 0 && (
-          <div className="flex flex-col gap-1">
-            {errorMessages.map((message, index) => (
-              <p
-                key={`ErrorMessage_${index}`}
-                className="text-red-500 text-sm font-medium"
-              >
-                {message}
-              </p>
-            ))}
-          </div>
+        {errorMessages && (
+          <p className="text-red-500 text-sm font-medium">{errorMessages}</p>
         )}
         {successMessage && (
           <p className="text-green-500 text-sm font-medium mt-2">
             Message from server: {successMessage} <br /> Please close the dialog
-            and hit `Get Staffs` to see the latest table
+            and hit `Refresh` to see the latest table
           </p>
         )}
       </DialogContent>

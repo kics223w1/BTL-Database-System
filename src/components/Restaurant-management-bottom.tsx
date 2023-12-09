@@ -101,7 +101,8 @@ const RestaurantManagementBottom: FC<RestaurantManagementBottomProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col">
+      <span className="text-lg font-bold mt-5">Functions most_fav_dish</span>
       <div className="flex items-baseline gap-5">
         <TextField
           label="At month"
@@ -133,6 +134,9 @@ const RestaurantManagementBottom: FC<RestaurantManagementBottomProps> = ({
         </button>
       </div>
 
+      <span className="text-lg font-bold mt-10">
+        Functions avg_income_in_year
+      </span>
       <div className="flex items-baseline gap-5">
         <TextField
           label="Enter restaurant ID"

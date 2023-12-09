@@ -9,8 +9,8 @@ const columns: GridColDef[] = [
   { field: "promotion_id", headerName: "promotion_id", width: 200 },
   { field: "promotion_name", headerName: "promotion_name", width: 200 },
   { field: "promotion_type", headerName: "promotion_type", width: 200 },
-  { field: "start_time", headerName: "start_time", width: 200 },
-  { field: "end_time", headerName: "end_time", width: 200 },
+  { field: "start_time", headerName: "start_time", width: 300 },
+  { field: "end_time", headerName: "end_time", width: 300 },
   { field: "reduced_price", headerName: "reduced_price", width: 200 },
   { field: "reduced_percent", headerName: "reduced_percent", width: 200 },
 ];

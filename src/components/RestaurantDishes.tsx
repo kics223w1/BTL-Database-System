@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { Customer, Dish } from "../features/types";
 import RestaurantDishesTop from "./RestaurantDishes-Top";
 import Dishes from "./Dishes";
-import CustomerBill from "./Customer-bill";
 import BillDishes from "./Bill-dishes";
 import AddBillDialog from "./dialogs/add-bill-dialog";
 
@@ -25,6 +24,10 @@ const RestaurantDishes: FC<RestaurantDishesProps> = ({ dishes }) => {
         setCurrentCustomer={setCurrentCustomer}
         isPageBill={true}
         handleOnClickCreateBill={() => {
+          if (currentBillID) {
+            setCurrentBillID("");
+          }
+
           setAddBillDialogVisible(true);
         }}
       />

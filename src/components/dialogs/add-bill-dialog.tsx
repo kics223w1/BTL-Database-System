@@ -94,14 +94,6 @@ const AddBillDialog: React.FC<AddBillDialogProps> = ({
   }, []);
 
   const handleCreateBill = async () => {
-    const isValid = tables.some(
-      (table) => table.table_id === tableId && table.res_id === resId
-    );
-    if (!isValid) {
-      toast(`Table ID is not in restaurant ${resId}`);
-      return;
-    }
-
     // Get the current date and time
     const currentDate = moment();
 

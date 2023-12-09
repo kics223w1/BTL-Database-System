@@ -148,7 +148,7 @@ const AddCustomerDialog: React.FC<AddTableDialogProps> = ({
           fullWidth
           variant="standard"
           onChange={(e) => {
-            setCustomerName(e.target.value.trim());
+            setCustomerName(e.target.value);
           }}
         />
 
@@ -191,7 +191,7 @@ const AddCustomerDialog: React.FC<AddTableDialogProps> = ({
           onClick={handleCreateCustomer}
           disabled={!accountID || !customerID || !customerName || !phoneNum}
         >
-          {isLoading ? "Loading..." : "Create account"}
+          {isLoading ? "Loading..." : "Create customer"}
         </Button>
       </DialogActions>
     </Dialog>

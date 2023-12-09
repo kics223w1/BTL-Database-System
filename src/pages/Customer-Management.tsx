@@ -230,7 +230,11 @@ const CustomerManagementBottom = () => {
           fullWidth
           variant="standard"
           onChange={(e) => {
-            setAmount(Number(e.target.value));
+            const newAmount = Number(e.target.value);
+            if (newAmount < 0) {
+              return;
+            }
+            setAmount(newAmount);
           }}
         />
 

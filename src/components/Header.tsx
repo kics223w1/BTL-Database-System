@@ -3,7 +3,7 @@ import {
   HomeIcon,
   UserIcon,
   UserCircleIcon,
-  ShoppingBagIcon,
+  UsersIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -36,7 +36,7 @@ const Header = () => {
               to="/customer"
               className="p-2 relative hover:bg-gray-50 rounded-md flex items-center gap-2"
             >
-              <UserCircleIcon className="w-4 h-4 text-gray-700" />
+              <UsersIcon className="w-4 h-4 text-gray-700" />
               <p className="hidden md:block">Customer</p>
             </Link>
           </li>

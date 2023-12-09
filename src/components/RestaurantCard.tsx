@@ -9,7 +9,6 @@ import dominoPizza from "../../assets/dominoPizza.png";
 // @ts-ignore
 import hana from "../../assets/hana.png";
 // @ts-ignore
-import kfc from "../../assets/kfc.png";
 // @ts-ignore
 import kichi from "../../assets/kichi.png";
 // @ts-ignore
@@ -78,7 +77,6 @@ const getRestaurantImage = () => {
     burgerking,
     dominoPizza,
     hana,
-    kfc,
     kichi,
     vietkitchen,
   ];

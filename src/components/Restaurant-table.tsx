@@ -1,7 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../utils/constants";
-import { GridRowModesModel, DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Restaurant } from "../features/types";
 
 const columns: GridColDef[] = [

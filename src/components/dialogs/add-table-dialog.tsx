@@ -127,7 +127,7 @@ const AddTableDialog: React.FC<AddTableDialogProps> = ({
           variant="standard"
           onChange={(e) => {
             const newNum = Number(e.target.value);
-            if (newNum >= 1) {
+            if (newNum >= 1 && newNum <= 10) {
               setSlots(newNum);
             }
           }}
