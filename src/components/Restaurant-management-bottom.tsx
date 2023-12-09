@@ -12,7 +12,7 @@ type RestaurantManagementBottomProps = {
 const RestaurantManagementBottom: FC<RestaurantManagementBottomProps> = ({
   restaurants,
 }) => {
-  const [month, setMonth] = React.useState<number>(1);
+  const [month, setMonth] = React.useState<number>(12);
   const [year, setYear] = React.useState<number>(2023);
 
   const [resID, setResID] = React.useState<string>("");

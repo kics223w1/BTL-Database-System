@@ -162,7 +162,7 @@ const CustomerManagement = () => {
 
 const CustomerManagementBottom = () => {
   const [amount, setAmount] = React.useState<number>(100000);
-  const [month, setMonth] = React.useState<number>(1);
+  const [month, setMonth] = React.useState<number>(12);
   const [year, setYear] = React.useState<number>(2023);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [rows, setRows] = useState<any[]>([]);
