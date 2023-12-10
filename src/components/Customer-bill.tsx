@@ -105,17 +105,12 @@ const CustomerBill: FC<Props> = ({ currentCustomer }) => {
           }}
           checkboxSelection
         />
-        <div className="flex items-center justify-center gap-5">
-          <button className="bg-orange-400 hover:bg-orange-400/90 rounded-md px-4 py-2">
-            Refresh
-          </button>
-        </div>
       </div>
       <div className="flex flex-col gap-5 w-full h-[600px]">
         <span className="font-bold text-lg">
           {selectedBill
             ? `Dishes in bill ${selectedBill.bill_id}`
-            : "Please select a bill to see the dishes"}
+            : "Please select a bill to see its dishes"}
         </span>
         <CustomerDishes selectedBill={selectedBill} />
       </div>
@@ -123,7 +118,7 @@ const CustomerBill: FC<Props> = ({ currentCustomer }) => {
         <span className="font-bold text-lg">
           {selectedBill
             ? `Promotions in bill ${selectedBill.bill_id}`
-            : "Please select a bill to see the promotions"}
+            : "Please select a bill to see its promotions"}
         </span>
         <CustomerPromotions selectedBill={selectedBill} />
       </div>

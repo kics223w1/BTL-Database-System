@@ -6,6 +6,9 @@ import { Customer, CustomerPay } from "../features/types";
 import toast from "react-hot-toast";
 import { TextField } from "@mui/material";
 import AddCustomerDialog from "../components/dialogs/add-customer-dialog";
+import RestaurantDishesTop from "../components/RestaurantDishes-Top";
+import CustomerBill from "../components/Customer-bill";
+import DefaultCustomerBill from "../components/Default-customer-bill";
 
 const columns: GridColDef[] = [
   { field: "cus_id", headerName: "cus_id", width: 200 },
@@ -146,6 +149,12 @@ const CustomerManagement = () => {
         </div>
       </div>
 
+      {selectedCustomer ? (
+        <CustomerBill currentCustomer={selectedCustomer} />
+      ) : (
+        <DefaultCustomerBill />
+      )}
+
       <CustomerManagementBottom />
 
       {isAddCustomerDialogOpen && (
@@ -261,7 +270,7 @@ const CustomerManagementBottom = () => {
         />
 
         <button
-          className={`bg-orange-400 py-2 rounded w-[440px] px-4 hover:bg-orange-400/90`}
+          className={`bg-orange-400 py-2 rounded w-full px-4 hover:bg-orange-400/90`}
           onClick={handleFindCustomer}
         >
           {isLoading ? "Loading..." : "Find customers"}

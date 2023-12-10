@@ -38,13 +38,7 @@ const UpdateStaffDialog: FC<UpdateStaffDialogProps> = ({
 }) => {
   const [identification, setIdentification] = useState("");
   const [name, setName] = useState("");
-  const [gender, setGender] = useState<string>(
-    selectedStaff.gender === 1
-      ? "Male"
-      : selectedStaff.gender === 2
-      ? "Female"
-      : "NULL"
-  );
+  const [gender, setGender] = useState<string>("NULL");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [managerID, setManagerID] = useState("");
   const [province, setProvince] = useState("");

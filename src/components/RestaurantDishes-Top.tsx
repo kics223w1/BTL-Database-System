@@ -67,6 +67,12 @@ const RestaurantDishesTop: FC<Props> = ({
         const customer = obj.data.find(
           (customer) => customer.account_id === account
         );
+        if (!customer) {
+          toast.error(
+            `Make sure you create a customer with this account before login!`
+          );
+        }
+
         setCurrentCustomer(customer);
         return;
       } else if (obj) {

@@ -100,15 +100,6 @@ const AccountManagement = () => {
         </button>
       </div>
 
-      <div className="flex flex-col w-full h-full gap-5 mt-20">
-        <RestaurantDishesTop
-          currentCustomer={currentCustomer}
-          setCurrentCustomer={setCurrentCustomer}
-        />
-
-        {currentCustomer && <CustomerBill currentCustomer={currentCustomer} />}
-      </div>
-
       {addAccountDialogOpen && (
         <AddAccountDialog
           accounts={accounts}

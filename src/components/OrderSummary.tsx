@@ -95,7 +95,7 @@ const OrderSummary: FC<Props> = ({ bill }) => {
             className={`w-full block mt-4 uppercase font-bold text-lg bg-orange-600 hover:bg-orange-400
            text-white text-center p-4 rounded-md`}
           >
-            Place order
+            Pay this bill
           </button>
         )}
       </div>
